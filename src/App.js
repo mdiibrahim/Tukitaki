@@ -1,12 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div>
-      <h1 className="text-7xl font-bold underline">
+      <p
+        className="text-xl  ">
         Hello world!
-      </h1>
+        Whereas disregard and contempt for human rights have resulted
+
+      </p>
     </div>
   );
 }
