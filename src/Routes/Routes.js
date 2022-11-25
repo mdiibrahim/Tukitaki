@@ -7,6 +7,7 @@ import Register from '../Pages/Register/Register';
 import UnknownPageError from '../Pages/UnknownPageError/UnknownPageError';
 import Error from '../Pages/SharedPages/Error/Error'
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import Blog from '../Pages/Blog/Blog';
 
 
     const router = createBrowserRouter([
@@ -29,7 +30,7 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
                 },
                 {
                     path: '/blog',
-                    
+                    element: <Blog></Blog>
                 },
                 {
                     path: '/*',

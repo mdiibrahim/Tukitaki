@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../Assets/images/Company/logo.png'
 const Header = () => {
+    const button = <React.Fragment>
+        <Link className="btn btn-sm btn-primary">Log In</Link>
+        <Link className="btn btn-sm btn-primary">Register</Link>
+    </React.Fragment>
     return (
         <header className="navbar bg-secondary">
             <div className="navbar-start">
@@ -10,10 +14,10 @@ const Header = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><Link>Item 1</Link></li>
+                        <li><Link to='/blog'>Blog</Link></li>
                         <li tabIndex={0}>
                             <Link className="justify-between">
-                                Parent
+                                Categories
                                 <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
                             </Link>
                             <ul className="p-2">
@@ -22,16 +26,20 @@ const Header = () => {
                             </ul>
                         </li>
                         <li><Link>Item 3</Link></li>
+                        <div className="navbar-end sm:hidden p-3">
+                            {button}
+                        </div>
                     </ul>
+
                 </div>
-                <Link className="btn btn-ghost normal-case text-sm sm:text-2xl"><img className='w-6 sm:w-10' src={logo} alt="" />Tukitaki-টুকিটাকি</Link>
+                <Link className="btn btn-ghost normal-case text-lg sm:text-2xl"><img className='w-6 sm:w-10' src={logo} alt="" />Tukitaki-টুকিটাকি</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
-                    <li><Link>Item 1</Link></li>
+                    <li><Link to='/blog'>Blog</Link></li>
                     <li tabIndex={0}>
                         <Link>
-                            Parent
+                            Categories
                             <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
                         </Link>
                         <ul className="p-2">
@@ -42,8 +50,8 @@ const Header = () => {
                     <li><Link>Item 3</Link></li>
                 </ul>
             </div>
-            <div className="navbar-end">
-                <Link className="btn">Get started</Link>
+            <div className="navbar-end hidden sm:flex">
+            {button}
             </div>
         </header>
     );
