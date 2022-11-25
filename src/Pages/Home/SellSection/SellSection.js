@@ -8,8 +8,8 @@ const SellSection = () => {
                 <figure><img src={sell} alt="Album" className='w-96 md:w-full'  /></figure>
                 <div className="card-body my-auto">
                     <h2 className="card-title text-5xl">Wanna Make Money!</h2>
-                    <p>Sell your mobile phones within a short term without any hassle at any place in the country.</p>
-                    <div className="card-actions justify-end">
+                    <p className='text-xl'>Sell your mobile phones within a short term without any hassle at any place in the country.</p>
+                    <div className="card-actions md:justify-end justify-center my-5">
                         <Link to='' className="btn btn-primary btn-lg">Add your Items</Link>
                     </div>
                 </div>
