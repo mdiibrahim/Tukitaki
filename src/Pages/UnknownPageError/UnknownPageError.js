@@ -4,7 +4,7 @@ import error from '../../Assets/images/404/404.jpg'
 const UnknownPageError = () => {
     return (
         <div>
-            <div className="card card-compact w-1/2 mx-auto my-40">
+            <div className="card card-compact sm:w-1/2 w-3/4 mx-auto my-40">
                 <figure><img src={error} alt="Shoes" /></figure>
                 <div className="card-body">
                     <h2 className="card-title">Sorrryyyy!</h2>

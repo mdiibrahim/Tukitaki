@@ -14,7 +14,7 @@ const Footer = () => {
                 <img className='w-32 -mt-5 mb-4' src={logo} alt="" />
                 <p className="font-bold">
                     Tukitaki-টুকিটাকি Ltd.
-                    <br />Providing P2P Reliable Phones
+                    <br />Bringing people in One platform
                 </p>
             </div>
             <div>
