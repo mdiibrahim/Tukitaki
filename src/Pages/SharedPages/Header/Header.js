@@ -25,7 +25,7 @@ const Header = () => {
                                 <li><Link>Submenu 2</Link></li>
                             </ul>
                         </li>
-                        <li><Link>Item 3</Link></li>
+                        <li><Link to='/dashboard'>Dashboard</Link></li>
                         <div className="navbar-end sm:hidden p-3">
                             {button}
                         </div>
@@ -47,7 +47,7 @@ const Header = () => {
                             <li><Link>Submenu 2</Link></li>
                         </ul>
                     </li>
-                    <li><Link>Item 3</Link></li>
+                    <li><Link to='/dashboard'>Dashboard</Link></li>
                 </ul>
             </div>
             <div className="navbar-end hidden sm:flex">

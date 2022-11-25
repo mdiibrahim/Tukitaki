@@ -8,6 +8,7 @@ import UnknownPageError from '../Pages/UnknownPageError/UnknownPageError';
 import Error from '../Pages/SharedPages/Error/Error'
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import Blog from '../Pages/Blog/Blog';
+import Dashboard from '../Pages/Dashboard/Dashboard';
 
 
     const router = createBrowserRouter([
@@ -36,13 +37,14 @@ import Blog from '../Pages/Blog/Blog';
                     path: '/*',
                     element: <UnknownPageError></UnknownPageError>
                 },
+                {
+                    path: '/dashboard',
+                    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                },
                 
             ] 
         },
-        {
-            path: '/dashboard',
-            element: <PrivateRoute></PrivateRoute>
-        },
+        
     ]);
     
 
