@@ -12,7 +12,7 @@ module.exports = {
 
           secondary: "#E9EBEE",
 
-          accent: "#90949C",
+          accent: "#F9F9F9",
 
           neutral: "#2F1D34",
           error: '#C42A02',

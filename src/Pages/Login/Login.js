@@ -1,10 +1,59 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import toast from 'react-hot-toast';
+import { useLocation, useNavigate, Link} from 'react-router-dom';
 const Login = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { logIn } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
+    const onSubmit = data => {
+        logIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                toast.success('Logged In successfully')
+            })
+            .catch(error => {
+                console.error(error.message)
+                
+            });
+    }
     return (
-        <div>
-            <h1>this is login</h1>
-        </div>
+        <section className='min-h-[600px] mx-auto my-20 '>
+            <div className='bg-accent mx-auto w-4/6 p-16 shadow rounded-lg'>
+                <h3 className='text-center text-bold text-3xl'>Log In</h3>
+                <form onSubmit={handleSubmit(onSubmit)}>
+
+                    {/* email field */}
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text">Enter your email?</span>
+                        </label>
+                        <input type="email" placeholder='ex: ex@example.com' {...register("email", { required: 'required' })} className="input input-primary input-bordered w-full" />
+                        {errors.email && <small className='text-error mt-1' >{errors.email.message}</small>}
+                    </div>
+
+                    {/* password field */}
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text">Enter your password?</span>
+                        </label>
+                        <input type="password" placeholder='password' className="input input-primary input-bordered w-full" {...register("password", { required: "required", pattern: { value: /(?=.*[A-Z])(?=.*[0-9])/, message: "For security, password should contain Capital letters and numbers" }, minLength: { value: 6, message: "your password should be at least 6 characters long" } })}
+                        />
+                        {errors.password && <small className='text-error mt-1' >{errors.password.message}</small>}
+                    </div>
+                    <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='log in'/>
+                </form>
+                <p>Don't have an account? <Link className='text-primary' to="/register">Please Register Now</Link></p>
+                <div className="divider"></div>
+                <button className='btn btn-primary w-full'>Log in with google</button>
+            </div>
+        </section>
     );
 };
 

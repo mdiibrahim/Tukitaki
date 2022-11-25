@@ -9,7 +9,7 @@ const Banner = () => {
                     <img alt='' src={banner} className="lg:w-3/4 rounded-xl opacity-90" />
                     <div className='text-center'>
                         <h1 className="text-5xl font-bold">Welcome to Tukitaki</h1>
-                        <p className="py-6">We connect customer and seller in one place for your desired authentic phones. Let's have a cup og Tea by joining us!!! </p>
+                        <p className="py-6">We connect client and seller in one place for your desired authentic phones. Let's have a cup of Tea by joining us!!! </p>
                         <Link to='/register'className="btn btn-primary">Get Started</Link>
                     </div>
                 </div>
