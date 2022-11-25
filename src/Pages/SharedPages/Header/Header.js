@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import logo from '../../../Assets/images/Company/logo.png'
 const Header = () => {
     const button = <React.Fragment>
-        <Link className="btn btn-sm btn-primary">Log In</Link>
-        <Link className="btn btn-sm btn-primary">Register</Link>
+        <Link to='/login' className="btn btn-sm btn-primary">Log In</Link>
+        <Link to='/register' className="btn btn-sm btn-primary">Register</Link>
     </React.Fragment>
     return (
         <header className="navbar bg-secondary">
@@ -32,7 +32,7 @@ const Header = () => {
                     </ul>
 
                 </div>
-                <Link className="btn btn-ghost normal-case text-lg sm:text-2xl"><img className='w-6 sm:w-10' src={logo} alt="" />Tukitaki-টুকিটাকি</Link>
+                <Link to='/' className="btn btn-ghost normal-case text-lg sm:text-2xl"><img className='w-6 sm:w-10' src={logo} alt="" />Tukitaki-টুকিটাকি</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
