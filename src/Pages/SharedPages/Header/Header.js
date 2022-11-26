@@ -1,10 +1,28 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../../Assets/images/Company/logo.png'
+import logo from '../../../Assets/images/Company/logo.png';
+
 const Header = () => {
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:5000/category')
+            .then(data => {
+                setCategories(data.data);
+
+            });
+    }, [])
+
     const button = <React.Fragment>
         <Link to='/login' className="btn btn-sm btn-primary">Log In</Link>
         <Link to='/register' className="btn btn-sm btn-primary">Register</Link>
+    </React.Fragment>
+    const categoryHeader = <React.Fragment>
+        <li>{
+            categories.map(category => <Link key={category._id} to={`/category/${category.category_id}`}>
+                {category.category_name}
+            </Link>)
+        }</li>
     </React.Fragment>
     return (
         <header className="navbar bg-secondary">
@@ -21,8 +39,8 @@ const Header = () => {
                                 <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
                             </Link>
                             <ul className="p-2">
-                                <li><Link>Submenu 1</Link></li>
-                                <li><Link>Submenu 2</Link></li>
+                            {categoryHeader}
+
                             </ul>
                         </li>
                         <li><Link to='/dashboard'>Dashboard</Link></li>
@@ -43,15 +61,15 @@ const Header = () => {
                             <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
                         </Link>
                         <ul className="p-2">
-                            <li><Link>Submenu 1</Link></li>
-                            <li><Link>Submenu 2</Link></li>
+
+                            {categoryHeader}
                         </ul>
                     </li>
                     <li><Link to='/dashboard'>Dashboard</Link></li>
                 </ul>
             </div>
             <div className="navbar-end hidden sm:flex">
-            {button}
+                {button}
             </div>
         </header>
     );
