@@ -1,10 +1,18 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import logo from '../../../Assets/images/Company/logo.png';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const Header = () => {
     const [categories, setCategories] = useState([]);
+    const { user, logOut } = useContext(AuthContext);
+    const handleLogOut = ()=> {
+        logOut()
+            .then(() => {toast.success('logged out succesfully') })
+        .catch(error=>console.error(error))
+    }
     useEffect(() => {
         axios.get('http://localhost:5000/category')
             .then(data => {
@@ -14,8 +22,19 @@ const Header = () => {
     }, [])
 
     const button = <React.Fragment>
-        <Link to='/login' className="btn btn-sm btn-primary">Log In</Link>
-        <Link to='/register' className="btn btn-sm btn-primary">Register</Link>
+        {
+            user?.uid ?
+                <>
+                    <Link to='/login' className="btn btn-sm btn-primary" onClick={handleLogOut}>Log Out</Link>
+
+                </>
+                :
+                <>
+                    <Link to='/login' className="btn btn-sm btn-primary">Log In</Link>
+                    <Link to='/register' className="btn btn-sm btn-primary">Register</Link>
+                </>
+
+        }
     </React.Fragment>
     const categoryHeader = <React.Fragment>
         <li>{
@@ -23,6 +42,9 @@ const Header = () => {
                 {category.category_name}
             </Link>)
         }</li>
+    </React.Fragment>
+    const dashboard = <React.Fragment>
+        <li> {user?.uid && <Link to='/dashboard'>Dashboard</Link>}</li>
     </React.Fragment>
     return (
         <header className="navbar bg-secondary">
@@ -39,11 +61,11 @@ const Header = () => {
                                 <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
                             </Link>
                             <ul className="p-2">
-                            {categoryHeader}
+                                {categoryHeader}
 
                             </ul>
                         </li>
-                        <li><Link to='/dashboard'>Dashboard</Link></li>
+                        {dashboard}
                         <div className="navbar-end sm:hidden p-3">
                             {button}
                         </div>
@@ -65,7 +87,7 @@ const Header = () => {
                             {categoryHeader}
                         </ul>
                     </li>
-                    <li><Link to='/dashboard'>Dashboard</Link></li>
+                    {dashboard}
                 </ul>
             </div>
             <div className="navbar-end hidden sm:flex">
