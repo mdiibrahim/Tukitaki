@@ -1,26 +1,37 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate, Link} from 'react-router-dom';
+import useToken from '../../Hooks/useToken/useToken';
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { logIn } = useContext(AuthContext);
+    const [loginEmail, setLoginEmail] = useState('');
+    const [logInError, setLogInError] = useState('');
+    const [token] = useToken(loginEmail);
     const location = useLocation();
     const navigate = useNavigate();
-
     const from = location.state?.from?.pathname || '/';
+    
     const onSubmit = data => {
+        setLogInError('');
         logIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
+                setLoginEmail(data.email)
                 toast.success('Logged In successfully')
             })
             .catch(error => {
                 console.error(error.message)
-                
+                setLogInError(error.message);
             });
+            
     }
+    if (token) {
+        navigate(from, { replace: true });
+    }
+    
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
             <div className='bg-accent mx-auto w-4/6 p-16 shadow rounded-lg'>
@@ -47,7 +58,8 @@ const Login = () => {
                         />
                         {errors.password && <small className='text-error mt-1' >{errors.password.message}</small>}
                     </div>
-                    <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='log in'/>
+                    <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='log in' />
+                    {logInError && <small className='text-error mt-2' >{logInError}</small>}
                 </form>
                 <p>Don't have an account? <Link className='text-primary' to="/register">Please Register Now</Link></p>
                 <div className="divider"></div>

@@ -1,23 +1,58 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../Hooks/useToken/useToken';
 const Register = () => {
-
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { registerUser } = useContext(AuthContext);
-     const onSubmit = (data) => {
+    const { registerUser, editUserName } = useContext(AuthContext);
+    const [registerError, setRegisterError] = useState('');
+    const [registeredEmail, setRegisteredEmail] = useState('')
+    const [token] = useToken(registeredEmail);
+
+    const onSubmit = (data) => {
+        
+        setRegisterError('');
         registerUser(data.email, data.password)
+        
             .then(result => {
                 const user = result.user;
+
                 console.log(user);
-                toast.success('User Created Successfully.')
-                
+                editUserName({ displayName: data.name })
+                    .then(() => {
+                        saveUserInDB(data.name, data.email, data.role);
+                        
+                    })
+                    .catch(err => console.error(err));
+                toast.success('Successfully Your registration done.')
+
             })
             .catch(error => {
-                console.error(error)
+                setRegisterError(error.message)
             });
+        const saveUserInDB = (name, email, role) => {
+            const user = { name, email, role };
+            fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(res => res.json())
+                .then(() =>{
+                    setRegisteredEmail(email)
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+        }
+    }
+    if (token) {
+        navigate('/');
     }
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
@@ -31,7 +66,7 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Enter your name?</span>
                         </label>
-                        <input type="name" placeholder='ex: Ibrahim' {...register("name", { required: 'required', minLength: {value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
+                        <input type="name" placeholder='ex: Ibrahim' {...register("name", { required: 'required', minLength: { value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
                         {errors.name && <small className='text-error mt-1' >{errors.name.message}</small>}
                     </div>
                     {/* email field */}
@@ -59,12 +94,17 @@ const Register = () => {
                             <span className="label-text">Join us by a....?</span>
                         </label>
                         <select className="select select-primary select-bordered" {...register("role", { required: 'required' })}>
+                            <option value='buyer'>Buyer</option>
                             <option value='seller' >Seller</option>
-                            <option value='buyer' selected>Buyer</option>
                         </select>
                         {errors.role && <small className='text-error mt-1' >{errors.role.message}</small>}
                     </div>
+
                     <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='register' />
+                    {
+                        { registerError } && <small className='text-error mt-1' >{registerError}</small>
+                    }
+
                 </form>
                 <p>Already have an account? <Link className='text-primary' to="/login">Please Login</Link></p>
                 <div className="divider"></div>

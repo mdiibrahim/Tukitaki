@@ -22,8 +22,8 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
         return signOut(auth);
     }
-    const editUser = (userInfo) =>{
-        return updateProfile(auth.currentUser, userInfo);
+    const editUserName = (name) =>{
+        return updateProfile(auth.currentUser, name);
     }
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
         logOut,
         user,
         loading,
-        editUser
+        editUserName
     }
     return (
         <AuthContext.Provider value={authInfo}>
