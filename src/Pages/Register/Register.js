@@ -66,7 +66,7 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Enter your name?</span>
                         </label>
-                        <input type="name" placeholder='ex: Ibrahim' {...register("name", { required: 'required', minLength: { value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
+                        <input type="name" placeholder='ex: Rhidy' {...register("name", { required: 'required', minLength: { value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
                         {errors.name && <small className='text-error mt-1' >{errors.name.message}</small>}
                     </div>
                     {/* email field */}

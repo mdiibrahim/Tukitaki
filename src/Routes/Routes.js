@@ -9,6 +9,15 @@ import Error from '../Pages/SharedPages/Error/Error'
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import Blog from '../Pages/Blog/Blog';
 import Dashboard from '../Pages/Dashboard/Dashboard';
+import AdminRoute from './AdminRoute/AdminRoute';
+import AllSellers from '../Pages/Dashboard/Admin/AllSellers/AllSellers';
+import AllBuyers from '../Pages/Dashboard/Admin/AllBuyers/AllBuyers';
+import ReportedItems from '../Pages/Dashboard/Admin/ReportedItems/ReportedItems';
+import SellerRoute from './SellerRoute/SellerRoute';
+import MyProducts from '../Pages/Dashboard/Seller/MyProducts/MyProducts';
+import AddProduct from '../Pages/Dashboard/Seller/AddProduct/AddProduct';
+import BuyerRoute from './BuyerRoute/BuyerRoute';
+import MyOrders from '../Pages/Dashboard/Buyer/MyOrders/MyOrders';
 
 
     const router = createBrowserRouter([
@@ -37,12 +46,52 @@ import Dashboard from '../Pages/Dashboard/Dashboard';
                     path: '/*',
                     element: <UnknownPageError></UnknownPageError>
                 },
-                {
-                    path: '/dashboard',
-                    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
-                },
+                
                 
             ] 
+        },
+        {
+            path: '/dashboard',
+            errorElement: <Error></Error>,
+            element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+            children: [
+                {
+                    path: '/dashboard/sellers',
+                    element: <AdminRoute>
+                        <AllSellers></AllSellers>
+                    </AdminRoute>,
+                },
+                {
+                    path: '/dashboard/buyers',
+                    element: <AdminRoute>
+                        <AllBuyers></AllBuyers>
+                    </AdminRoute>,
+                },
+                {
+                    path: '/dashboard/reporteditems',
+                    element: <AdminRoute>
+                        <ReportedItems></ReportedItems>
+                    </AdminRoute>,
+                },
+                {
+                    path: '/dashboard/products',
+                    element: <SellerRoute>
+                        <MyProducts></MyProducts>
+                    </SellerRoute>
+                },
+                {
+                    path: '/dashboard/products',
+                    element: <SellerRoute>
+                        <AddProduct></AddProduct>
+                    </SellerRoute>
+                },
+                {
+                    path: '/dashboard/products',
+                    element: <BuyerRoute>
+                        <MyOrders></MyOrders>
+                    </BuyerRoute>
+                },
+            ]
         },
         
     ]);
