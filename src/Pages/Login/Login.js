@@ -6,7 +6,7 @@ import { useLocation, useNavigate, Link} from 'react-router-dom';
 import useToken from '../../Hooks/useToken/useToken';
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { logIn } = useContext(AuthContext);
+    const { logIn, registerWithGoogle } = useContext(AuthContext);
     const [loginEmail, setLoginEmail] = useState('');
     const [logInError, setLogInError] = useState('');
     const [token] = useToken(loginEmail);
@@ -14,6 +14,8 @@ const Login = () => {
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
     
+    
+
     const onSubmit = data => {
         setLogInError('');
         logIn(data.email, data.password)
@@ -27,13 +29,45 @@ const Login = () => {
             });
             
     }
+    const handleLogInWithGoogle = () => {
+        setLogInError('');
+        registerWithGoogle()
+            .then(result => {
+                const user = result.user;
+                saveUserInDB(user.displayName, user.email, 'buyer');
+                console.log(user);
+                toast.success('Successfully You entered.')
+
+            })
+            .catch(error => {
+                setLogInError(error.message)
+            });
+            
+    }
+    const saveUserInDB = (name, email, role) => {
+        const user = { name, email, role };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(() =>{
+                setLoginEmail(email)
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    }
     if (token) {
         navigate(from, { replace: true });
     }
     
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
-            <div className='bg-accent mx-auto w-4/6 p-16 shadow rounded-lg'>
+            <div className='bg-accent mx-auto sm:w-4/6 p-16 shadow rounded-lg'>
                 <h3 className='text-center text-bold text-3xl'>Log In</h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -62,7 +96,7 @@ const Login = () => {
                 </form>
                 <p>Don't have an account? <Link className='text-primary' to="/register">Please Register Now</Link></p>
                 <div className="divider"></div>
-                <button className='btn btn-primary w-full'>Log in with google</button>
+                <button className='btn btn-primary w-full' onClick={handleLogInWithGoogle}>Log in with google</button>
             </div>
         </section>
     );

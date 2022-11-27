@@ -4,10 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 import useToken from '../../Hooks/useToken/useToken';
+
 const Register = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { registerUser, editUserName } = useContext(AuthContext);
+    const { registerUser, editUserName, registerWithGoogle } = useContext(AuthContext);
     const [registerError, setRegisterError] = useState('');
     const [registeredEmail, setRegisteredEmail] = useState('')
     const [token] = useToken(registeredEmail);
@@ -33,30 +34,47 @@ const Register = () => {
             .catch(error => {
                 setRegisterError(error.message)
             });
-        const saveUserInDB = (name, email, role) => {
-            const user = { name, email, role };
-            fetch('http://localhost:5000/users', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(user)
+            
+        
+    }
+    const handleLogInWithGoogle = () => {
+        setRegisterError('');
+        registerWithGoogle()
+            .then(result => {
+                const user = result.user;
+                saveUserInDB(user.displayName, user.email, 'buyer');
+                console.log(user);
+                toast.success('Successfully Your registration done.')
+
             })
-                .then(res => res.json())
-                .then(() =>{
-                    setRegisteredEmail(email)
-                })
-                .catch((err) => {
-                    console.error(err);
-                })
-        }
+            .catch(error => {
+                setRegisterError(error.message)
+            });
+            
+    }
+    const saveUserInDB = (name, email, role) => {
+        const user = { name, email, role };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(() =>{
+                setRegisteredEmail(email)
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     }
     if (token) {
         navigate('/');
     }
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
-            <div className='bg-accent mx-auto w-4/6 p-16 shadow rounded-lg'>
+            <div className='bg-accent mx-auto sm:w-4/6 p-16 shadow rounded-lg'>
                 <h3 className='text-center text-bold text-3xl'>Register</h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -108,7 +126,7 @@ const Register = () => {
                 </form>
                 <p>Already have an account? <Link className='text-primary' to="/login">Please Login</Link></p>
                 <div className="divider"></div>
-                <button className='btn btn-primary w-full'>Register with google</button>
+                <button className='btn btn-primary w-full' onClick={handleLogInWithGoogle}>Register with google</button>
             </div>
         </section>
     );
