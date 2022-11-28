@@ -21,7 +21,7 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
 
-                console.log(user);
+                
                 editUserName({ displayName: data.name })
                     .then(() => {
                         saveUserInDB(data.name, data.email, data.role);
@@ -43,7 +43,7 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
                 saveUserInDB(user.displayName, user.email, 'buyer');
-                console.log(user);
+                
                 toast.success('Successfully Your registration done.')
 
             })
@@ -74,7 +74,7 @@ const Register = () => {
     }
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
-            <div className='bg-accent mx-auto sm:w-4/6 p-16 shadow rounded-lg'>
+            <div className='bg-accent mx-auto sm:w-2/4 p-16 shadow rounded-lg'>
                 <h3 className='text-center text-bold text-3xl'>Register</h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -84,7 +84,7 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Enter your name?</span>
                         </label>
-                        <input type="name" placeholder='ex: Rhidy' {...register("name", { required: 'required', minLength: { value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
+                        <input type="name" placeholder='ex: Ibrahim' {...register("name", { required: 'required', minLength: { value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
                         {errors.name && <small className='text-error mt-1' >{errors.name.message}</small>}
                     </div>
                     {/* email field */}

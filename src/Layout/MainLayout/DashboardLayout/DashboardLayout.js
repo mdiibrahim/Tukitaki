@@ -9,9 +9,11 @@ import Header from '../../../Pages/SharedPages/Header/Header';
 
 const Dashboardlayout = () => {
     const { user } = useContext(AuthContext);
+    
     const [isAdmin] = useAdmin(user?.email);
     const [isSeller] = useSeller(user?.email);
     const [isBuyer] = useBuyer(user?.email);
+    
     return (
         <div>
             <Header></Header>
@@ -23,28 +25,31 @@ const Dashboardlayout = () => {
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 text-base-content">
-                        <li><Link to="/dashboard">My Appointments</Link></li>
-                        {
-                            isAdmin && <>
-                                <li><Link to="/dashboard/allusers">All Sellers</Link></li>
-                                <li><Link to="/dashboard/adddoctor">All Buyers</Link></li>
-                                <li><Link to="/dashboard/managedoctors">Reported Items</Link></li>
-                            </>
-                        }
-                        {
+                        
+                    {
                             isSeller && <>
-                                <li><Link to="/dashboard/allusers">All Sellers</Link></li>
-                                <li><Link to="/dashboard/adddoctor">All Buyers</Link></li>
-                                <li><Link to="/dashboard/managedoctors">Reported Items</Link></li>
+                                <li><Link to="/dashboard/allusers">My Products</Link></li>
+                                <li><Link to="/dashboard/adddoctor">Add A Product</Link></li>
                             </>
                         }
+                        {    
+                            isAdmin && <>
+                                <li><Link to="/dashboard/sellers">All Sellers</Link></li>
+                                <li><Link to="/dashboard/buyers">All Buyers</Link></li>
+                                <li><Link to="/dashboard/reporteditems">Reported Items</Link></li>
+                            </>
+                        }
+                        
+                        
+                        
                         {
                             isBuyer && <>
-                                <li><Link to="/dashboard/allusers">All Sellers</Link></li>
-                                <li><Link to="/dashboard/adddoctor">All Buyers</Link></li>
-                                <li><Link to="/dashboard/managedoctors">Reported Items</Link></li>
+                                <li><Link to="/dashboard/allusers">My Orders</Link></li>
                             </>
                         }
+                    
+                    
+                        
 
                     </ul>
 

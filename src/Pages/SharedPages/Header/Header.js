@@ -8,6 +8,7 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 const Header = () => {
     const [categories, setCategories] = useState([]);
     const { user, logOut } = useContext(AuthContext);
+  
     const handleLogOut = ()=> {
         logOut()
             .then(() => {toast.success('logged out succesfully') })

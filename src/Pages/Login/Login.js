@@ -35,7 +35,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 saveUserInDB(user.displayName, user.email, 'buyer');
-                console.log(user);
+                
                 toast.success('Successfully You entered.')
 
             })
