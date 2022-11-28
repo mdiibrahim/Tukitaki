@@ -67,7 +67,7 @@ const Login = () => {
     
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
-            <div className='bg-accent mx-auto sm:w-4/6 p-16 shadow rounded-lg'>
+            <div className='bg-accent mx-auto sm:w-2/4 p-16 shadow rounded-lg'>
                 <h3 className='text-center text-bold text-3xl'>Log In</h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
 

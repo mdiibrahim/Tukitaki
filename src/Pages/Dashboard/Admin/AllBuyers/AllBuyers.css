@@ -1,0 +1,8 @@
+.table :where(thead, tfoot) :where(th, td){
+    background-color: #F9F9F9;
+}
+
+
+.table tr.hover:hover th, .table tr.hover:hover td, .table tr.hover:nth-child(even):hover th, .table tr.hover:nth-child(even):hover td{
+    background-color: #E9EBEE;
+}
