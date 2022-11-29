@@ -8,11 +8,11 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 const Header = () => {
     const [categories, setCategories] = useState([]);
     const { user, logOut } = useContext(AuthContext);
-  
-    const handleLogOut = ()=> {
+
+    const handleLogOut = () => {
         logOut()
-            .then(() => {toast.success('logged out succesfully') })
-        .catch(error=>console.error(error))
+            .then(() => { toast.success('logged out succesfully') })
+            .catch(error => console.error(error))
     }
     useEffect(() => {
         axios.get('http://localhost:5000/category')
@@ -45,7 +45,7 @@ const Header = () => {
         }</li>
     </React.Fragment>
     const dashboard = <React.Fragment>
-        <li> {user?.uid && <Link to='/dashboard'>Dashboard</Link>}</li>
+        <li> {user?.uid && <Link to='/dashboard' >Dashboard</Link>}</li>
     </React.Fragment>
     return (
         <header className="navbar bg-secondary">
@@ -70,7 +70,11 @@ const Header = () => {
                         <div className="navbar-end sm:hidden p-3">
                             {button}
                         </div>
+                        <label htmlFor="dashboard-drawer" tabIndex={2} className="btn btn-ghost lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                        </label>
                     </ul>
+
 
                 </div>
                 <Link to='/' className="btn btn-ghost normal-case text-lg sm:text-2xl"><img className='w-6 sm:w-10' src={logo} alt="" />Tukitaki-টুকিটাকি</Link>
@@ -94,6 +98,7 @@ const Header = () => {
             <div className="navbar-end hidden sm:flex">
                 {button}
             </div>
+
         </header>
     );
 };

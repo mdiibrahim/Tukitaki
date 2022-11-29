@@ -13,23 +13,24 @@ const AllBuyers = () => {
     });
     const handleDeleteBuyer = id => {
         fetch(`http://localhost:5000/users/buyers/${id}`, {
-            method: 'Delete', 
+            method: 'Delete',
             headers: {
                 authorization: `bearer ${localStorage.getItem('access-token')}`
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.modifiedCount > 0){
-                toast.success('Successfully deleted the Buyer.')
-                refetch();
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.deletedCount > 0) {
+                    toast.success('Successfully deleted the Buyer.')
+                    refetch();
+                }
+            })
     }
     return (
-        
-            <div>
-            <h1 className='text-center text-3xl text-bold text-primary mt-2'>All Buyer </h1>
+
+        <div>
+            <h1 className='text-center text-2xl text-bold text-primary mt-1'>All Buyer </h1>
             <div className="overflow-x-auto ">
                 <table className="table w-full bg-color " >
 
@@ -43,20 +44,20 @@ const AllBuyers = () => {
                     </thead>
                     <tbody>
                         {
-                            buyers.map((buyer, index) => <tr className='hover' key='user._id'>
+                            buyers.map((buyer, index) => <tr className='hover' key={buyer._id}>
                                 <th>{index + 1}</th>
                                 <td>{buyer.name}</td>
                                 <td>{buyer.email}</td>
-                                
+
                                 <td><button onClick={() => handleDeleteBuyer(buyer._id)} className='btn btn-xs btn-error'>Delete</button></td>
-                                
+
                             </tr>)
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
     );
 };
 

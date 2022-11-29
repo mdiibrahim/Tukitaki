@@ -31,24 +31,25 @@ const AllSellers = () => {
      
     */
     const handleDeleteSeller = id => {
-        fetch(`http://localhost:5000/users/sellers`, {
-            method: 'Delete', 
+        fetch(`http://localhost:5000/users/sellers/${id}`, {
+            method: 'Delete',
             headers: {
-                authorization: `bearer ${localStorage.getItem('accessToken')}`
+                authorization: `bearer ${localStorage.getItem('access-token')}`
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.modifiedCount > 0){
-                toast.success('Successfully deleted the seller.')
-                refetch();
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.deletedCount > 0) {
+                    toast.success('Successfully deleted the seller.')
+                    refetch();
+                }
+            })
     }
 
     return (
         <div>
-            <h1 className='text-center text-3xl text-bold text-primary mt-2'>All seller </h1>
+            <h1 className='text-center text-2xl text-bold text-primary mt-1'>All seller </h1>
             <div className="overflow-x-auto ">
                 <table className="table w-full bg-color " >
 
@@ -63,13 +64,13 @@ const AllSellers = () => {
                     </thead>
                     <tbody>
                         {
-                            sellers.map((seller, index) => <tr className='hover' key='user._id'>
+                            sellers.map((seller, index) => <tr className='hover' key={seller._id}>
                                 <th>{index + 1}</th>
                                 <td>{seller.name}</td>
                                 <td>{seller.email}</td>
                                 <td><button className='btn btn-xs btn-primary'>Verify</button></td>
                                 <td><button onClick={() => handleDeleteSeller(seller._id)} className='btn btn-xs btn-error'>Delete</button></td>
-                                
+
                             </tr>)
                         }
                     </tbody>
