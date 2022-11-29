@@ -28,8 +28,8 @@ const Dashboardlayout = () => {
                         
                         {
                             isSeller && <>
-                                <li><Link to="/dashboard/allusers">My Products</Link></li>
-                                <li><Link to="/dashboard/adddoctor">Add A Product</Link></li>
+                                <li><Link to="/dashboard/my-products">My Products</Link></li>
+                                <li><Link to="/dashboard/add-product">Add A Product</Link></li>
                             </>
                         }
                         {    

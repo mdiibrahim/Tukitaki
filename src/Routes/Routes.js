@@ -77,13 +77,13 @@ import Dashboardlayout from '../Layout/MainLayout/DashboardLayout/DashboardLayou
                     </AdminRoute>,
                 },
                 {
-                    path: '/dashboard/products',
+                    path: '/dashboard/my-products',
                     element: <SellerRoute>
                         <MyProducts></MyProducts>
                     </SellerRoute>
                 },
                 {
-                    path: '/dashboard/products',
+                    path: '/dashboard/add-product',
                     element: <SellerRoute>
                         <AddProduct></AddProduct>
                     </SellerRoute>

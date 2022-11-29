@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const useSeller = email => {
     const [isSeller, setIsSeller] = useState(false);
+    const { setSeller } = useContext(AuthContext);
+    
     const [isSellerLoading, setIsSellerLoading] = useState(true);
     useEffect(() => {
         if (email) {
@@ -10,10 +13,11 @@ const useSeller = email => {
                 .then(data => {
                     
                     setIsSeller(data.isSeller);
+                    setSeller(data.seller)
                     setIsSellerLoading(false);
                 })
         }
-    }, [email])
+    }, [email, setSeller])
     return [isSeller, isSellerLoading]
 }
 
