@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import React from 'react';
 import toast from 'react-hot-toast';
 import './AllSeller.css'
@@ -11,13 +12,20 @@ const AllSellers = () => {
             return data;
         }
     });
-    /* const handleVerifySeller = id => {
-        fetch(`http://localhost:5000/users/sellers/${id}`, {
+   
+    
+   /* const handleVerifySeller = id => {
+         console.log(id)
+        fetch(`http://localhost:5000/users/sellers/verify/${id}`, {
             method: 'PUT', 
             headers: {
-                authorization: `bearer ${localStorage.getItem('access-token')}`
+                // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                'Content-Type': 'application/json'
+                
             },
-            body : {verified: 'yes'} 
+            body: JSON.stringify({
+                verified: 'yes'
+            }) 
         })
         .then(res => res.json())
         .then(data => {
@@ -26,15 +34,61 @@ const AllSellers = () => {
                 refetch();
             }
         })
+    }*/
+    const handleVerifySeller = (id) => {
+        try {
+            axios.put(`http://localhost:5000/users/sellers/verify/${id}`, {
+                verified: 'yes'
+            })
+                .then(res => {
+                    console.log(res)
+                    if(res.data.modifiedCount > 0){
+                        toast.success('Successfully Unverified the seller.')
+                    }
+                    refetch();
+                })
+        } catch (error) {
+            console.log(error)
+        }
     }
-     onClick={() => handleVerifySeller(seller._id)} 
+    const handleUnverifySeller = id => {
+        // fetch(`http://localhost:5000/users/sellers/unverify/${id}`, {
+        //     method: 'PUT', 
+        //     headers: {
+        //         authorization: `bearer ${localStorage.getItem('accessToken')}`
+        //     },
+        //     body: JSON.stringify({verified: 'no'}) 
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //     if(data.modifiedCount > 0){
+        //         toast.success('Successfully Unverified the seller.')
+        //         refetch();
+        //     }
+        // })
+        try {
+            axios.put(`http://localhost:5000/users/sellers/unverify/${id}`, {
+                verified: 'no'
+            })
+                .then(res => {
+                    console.log(res)
+                    if(res.data.modifiedCount > 0){
+                        toast.success('Successfully Unverified the seller.')
+                    }
+                    refetch();
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
      
-    */
+    
     const handleDeleteSeller = id => {
         fetch(`http://localhost:5000/users/sellers/${id}`, {
             method: 'Delete',
             headers: {
-                authorization: `bearer ${localStorage.getItem('access-token')}`
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
             }
         })
             .then(res => res.json())
@@ -68,7 +122,16 @@ const AllSellers = () => {
                                 <th>{index + 1}</th>
                                 <td>{seller.name}</td>
                                 <td>{seller.email}</td>
-                                <td><button className='btn btn-xs btn-primary'>Verify</button></td>
+                                {/* <td>{seller.verified === 'no' ? <button  onClick={() => handleVerifySeller(seller._id)}  className='btn btn-xs btn-primary'>Verify</button> : <button  onClick={() => handleUnverifySeller(seller._id)}  className='btn btn-xs btn-primary'>Unverify</button>} </td> */}
+                                <td>
+                                    {
+                                        seller.verified === 'no' &&  <button  onClick={() => handleVerifySeller(seller._id)}  className='btn btn-xs btn-primary'>Verify</button>
+                                    }
+                                    {
+                                        seller.verified === 'yes' && <button  onClick={() => handleUnverifySeller(seller._id)}  className='btn btn-xs btn-primary'>Unverify</button>
+                                    }
+                                </td>
+                                    
                                 <td><button onClick={() => handleDeleteSeller(seller._id)} className='btn btn-xs btn-error'>Delete</button></td>
 
                             </tr>)

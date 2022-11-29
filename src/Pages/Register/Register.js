@@ -12,7 +12,9 @@ const Register = () => {
     const [registerError, setRegisterError] = useState('');
     const [registeredEmail, setRegisteredEmail] = useState('')
     const [token] = useToken(registeredEmail);
-
+    if (token) {
+        navigate('/');
+    }
     const onSubmit = (data) => {
         
         setRegisterError('');
@@ -53,7 +55,7 @@ const Register = () => {
             
     }
     const saveUserInDB = (name, email, role) => {
-        const user = { name, email, role };
+        const user = { name, email, role, verified: 'no' };
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
@@ -64,14 +66,14 @@ const Register = () => {
             .then(res => res.json())
             .then(() =>{
                 setRegisteredEmail(email)
+                
             })
             .catch((err) => {
                 console.error(err);
             })
     }
-    if (token) {
-        navigate('/');
-    }
+   
+    
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
             <div className='bg-accent mx-auto sm:w-2/4 p-16 shadow rounded-lg'>
@@ -84,7 +86,7 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Enter your name?</span>
                         </label>
-                        <input type="name" placeholder='ex: Ibrahim' {...register("name", { required: 'required', minLength: { value: 4, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
+                        <input type="name" placeholder='ex: Ibrahim' {...register("name", { required: 'required', minLength: { value: 2, message: "your name is too short" } })} className="input input-primary input-bordered w-full" />
                         {errors.name && <small className='text-error mt-1' >{errors.name.message}</small>}
                     </div>
                     {/* email field */}
