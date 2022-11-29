@@ -68,7 +68,8 @@ const AddProduct = () => {
                         yearOfPurchase,
                         details,
                         date,
-                        mobileImage : imgData.data.url
+                        mobileImage: imgData.data.url,
+                        sold: 'no'
                     }
                     try {
         

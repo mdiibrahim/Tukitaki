@@ -8,7 +8,6 @@ import UnknownPageError from '../Pages/UnknownPageError/UnknownPageError';
 import Error from '../Pages/SharedPages/Error/Error'
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import Blog from '../Pages/Blog/Blog';
-import Dashboard from '../Pages/Dashboard/Dashboard';
 import AdminRoute from './AdminRoute/AdminRoute';
 import AllSellers from '../Pages/Dashboard/Admin/AllSellers/AllSellers';
 import AllBuyers from '../Pages/Dashboard/Admin/AllBuyers/AllBuyers';

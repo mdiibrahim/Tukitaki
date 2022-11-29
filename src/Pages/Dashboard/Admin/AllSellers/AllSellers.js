@@ -122,7 +122,6 @@ const AllSellers = () => {
                                 <th>{index + 1}</th>
                                 <td>{seller.name}</td>
                                 <td>{seller.email}</td>
-                                {/* <td>{seller.verified === 'no' ? <button  onClick={() => handleVerifySeller(seller._id)}  className='btn btn-xs btn-primary'>Verify</button> : <button  onClick={() => handleUnverifySeller(seller._id)}  className='btn btn-xs btn-primary'>Unverify</button>} </td> */}
                                 <td>
                                     {
                                         seller.verified === 'no' &&  <button  onClick={() => handleVerifySeller(seller._id)}  className='btn btn-xs btn-primary'>Verify</button>
