@@ -18,6 +18,7 @@ import AddProduct from '../Pages/Dashboard/Seller/AddProduct/AddProduct';
 import BuyerRoute from './BuyerRoute/BuyerRoute';
 import MyOrders from '../Pages/Dashboard/Buyer/MyOrders/MyOrders';
 import Dashboardlayout from '../Layout/MainLayout/DashboardLayout/DashboardLayout';
+import Categories from '../Pages/Categories/Categories';
 
 
     const router = createBrowserRouter([
@@ -41,6 +42,11 @@ import Dashboardlayout from '../Layout/MainLayout/DashboardLayout/DashboardLayou
                 {
                     path: '/blog',
                     element: <Blog></Blog>
+                },
+                {
+                    path: '/category/:category_name',
+                    loader: ({params})=>fetch(`http://localhost:5000/category/${params.category_name}`),
+                    element: <PrivateRoute><Categories></Categories></PrivateRoute>
                 },
                 {
                     path: '/*',
@@ -88,7 +94,7 @@ import Dashboardlayout from '../Layout/MainLayout/DashboardLayout/DashboardLayou
                     </SellerRoute>
                 },
                 {
-                    path: '/dashboard/products',
+                    path: '/dashboard/my-orders',
                     element: <BuyerRoute>
                         <MyOrders></MyOrders>
                     </BuyerRoute>

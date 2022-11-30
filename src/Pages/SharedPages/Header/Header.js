@@ -39,7 +39,7 @@ const Header = () => {
     </React.Fragment>
     const categoryHeader = <React.Fragment>
         <li>{
-            categories.map(category => <Link key={category._id} to={`/category/${category.category_id}`}>
+            categories.map(category => <Link key={category._id} to={`/category/${category.category_name}`}>
                 {category.category_name}
             </Link>)
         }</li>

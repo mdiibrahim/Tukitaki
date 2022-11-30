@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 
 
 const MyProducts = () => {
-    const { user } = useContext(AuthContext);
+    const { user, setAdvertiseItems } = useContext(AuthContext);
     const { data: products = [], refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
@@ -31,7 +32,21 @@ const MyProducts = () => {
             })
     }
     const handleAdvertiseProduct = (id) => {
-        
+        console.log(id)
+        try {
+            fetch(`https://tukitakibyrhidy-server.vercel.app/products/advertise/${id}`, {
+                method: 'GET'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+
+
+                })
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
     return (
         <div>
@@ -78,16 +93,15 @@ const MyProducts = () => {
                                         {sold === 'no' ? "Available" : "Sold"}
                                     </td>
                                     <td>
-                                    {
-                                        sold === 'no' &&  <button  onClick={() => handleAdvertiseProduct(_id)}  className='btn btn-xs btn-primary'>Advertise</button>
-                                    }
-                                    {
-                                        sold === 'yes' && <button   className='btn btn-xs btn-primary' disabled>Advertise</button>
-                                    }
-                                </td>
-                                    <th>
-                                        <td><button onClick={() => handleDeleteProduct(_id)} className='btn btn-xs btn-error'>Delete</button></td>
-                                    </th>
+                                        {
+                                            sold === 'no' && <button onClick={() => handleAdvertiseProduct(_id)} className='btn btn-xs btn-primary'>Advertise</button>
+                                        }
+                                        {
+                                            sold === 'yes' && <button className='checkbox' disabled checked>Advertise</button>
+                                        }
+                                    </td>
+
+                                    <td><button onClick={() => handleDeleteProduct(_id)} className='btn btn-xs btn-error'>Delete</button></td>
 
                                 </tr>
 

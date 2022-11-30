@@ -37,7 +37,7 @@ const AddProduct = () => {
     </React.Fragment>
 
     const onSubmit = (data) => {
-        const { mobileBrand, details, mobileCondition, mobileName, mobilePrice, sellerLocation, sellerNumber, yearOfPurchase } = data;
+        const { mobileBrand, details, mobileCondition, mobileName, mobilePrice, sellerLocation, sellerNumber, yearOfPurchase, yearOfUse, originalMobilePrice } = data;
         const date = new Date().toLocaleDateString();
         
         
@@ -69,7 +69,9 @@ const AddProduct = () => {
                         details,
                         date,
                         mobileImage: imgData.data.url,
-                        sold: 'no'
+                        sold: 'no',
+                        originalMobilePrice,
+
                     }
                     try {
         
@@ -85,7 +87,7 @@ const AddProduct = () => {
                         .then(result =>{
                             console.log(result);
                             toast.success('Your mobile is added successfully');
-                            navigate('/dashboard/my-products')
+                            // navigate('/dashboard/my-products')
                         })
                     }
                     catch (error) {
@@ -122,10 +124,17 @@ const AddProduct = () => {
 
                         <div className="form-control w-full">
                             <label className="label">
-                                <span className="label-text">Enter your mobile price?</span>
+                                <span className="label-text">Enter your expected price?</span>
                             </label>
                             <input type="number"  {...register("mobilePrice", { required: 'required' })} className="input input-primary input-bordered w-full" />
                             {errors.mobilePrice && <small className='text-error mt-1' >{errors.mobilePrice.message}</small>}
+                        </div>
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">Enter the original price?</span>
+                            </label>
+                            <input type="number"  {...register("originalMobilePrice", { required: 'required' })} className="input input-primary input-bordered w-full" />
+                            {errors.originalMobilePrice && <small className='text-error mt-1' >{errors.originalMobilePrice.message}</small>}
                         </div>
                         <div className="form-control w-full ">
                             <label className="label">
@@ -176,11 +185,18 @@ const AddProduct = () => {
                             <input type="name" {...register("yearOfPurchase", { required: 'required' })} className="input input-primary input-bordered w-full" />
                             {errors.yearOfPurchase && <small className='text-error mt-1' >{errors.yearOfPurchase.message}</small>}
                         </div>
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">How many days use this mobile?</span>
+                            </label>
+                            <input type="name" {...register("yearOfUse", { required: 'required' })} className="input input-primary input-bordered w-full" placeholder='ex: 2 years/ 5 days' />
+                            {errors.yearOfUse && <small className='text-error mt-1' >{errors.yearOfUse.message}</small>}
+                        </div>
                         <div className="form-control w-full max-w-xs">
                             <label className="label"> <span className="label-text">Enter your selling mobile Photo...?</span></label>
                             <input type="file" alt=' ' {...register("image", {
                                 required: "required"
-                            })} className="input input-bordered w-full max-w-xs" />
+                            })} className="input input-bordered input-primary w-full " />
                             {errors.image && <small className='text-error mt-1' >{errors.image.message}</small>}
                         </div>
                         <div className="form-control w-full">
