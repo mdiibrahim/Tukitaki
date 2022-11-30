@@ -1,0 +1,6 @@
+.btn-disabled, .btn-disabled:hover, .btn[disabled], .btn[disabled]:hover{
+
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: .5;
+    background-color: #F9F9F9;
+}

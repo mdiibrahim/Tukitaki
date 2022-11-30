@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [seller, setSeller] = useState({});
     const [advertiseItems, setAdvertiseItems] = useState([]);
+    const [reportedItems, setReportedItems] = useState({});
     const registerUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -54,7 +55,8 @@ const AuthProvider = ({ children }) => {
         seller,
         advertiseItems,
         setAdvertiseItems,
-
+        setReportedItems,
+        reportedItems
     }
     return (
         <AuthContext.Provider value={authInfo}>

@@ -61,7 +61,6 @@ const AddProduct = () => {
                         mobilePrice,
                         mobileCondition,
                         sellerName: seller.name,
-                        sellerEmail: seller.email,
                         isSellerVerified: seller.verified,
                         sellerNumber,
                         sellerLocation,
@@ -71,6 +70,7 @@ const AddProduct = () => {
                         mobileImage: imgData.data.url,
                         sold: 'no',
                         originalMobilePrice,
+                        yearOfUse
 
                     }
                     try {
