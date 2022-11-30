@@ -140,7 +140,7 @@ const Categories = () => {
                                         <p><span className='underline'>Detailes about phone:</span> {details}</p>
                                         <div className="card-actions justify-between mt-6">
                                             {
-                                                isBuyer ? sold === 'no' && <label htmlFor="my-modal-3" className="btn btn-primary">Book Now</label> : <div className="btn btn-primary" disabled>Book Now</div>
+                                                isBuyer ?  <label htmlFor="my-modal-3" className="btn btn-primary">Book Now</label> : <div className="btn btn-primary" disabled>Book Now</div>
                                             }
 
                                             {
