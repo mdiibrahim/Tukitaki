@@ -16,7 +16,8 @@ const Login = () => {
 
 
 
-    const onSubmit = data => {
+    const onSubmit = (data, event) => {
+        event.preventDefault();
         setLogInError('');
         logIn(data.email, data.password)
             .then(result => {

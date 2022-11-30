@@ -15,8 +15,8 @@ const Register = () => {
     if (token) {
         navigate('/');
     }
-    const onSubmit = (data) => {
-
+    const onSubmit = (data,event) => {
+        event.preventDefault();
         setRegisterError('');
         registerUser(data.email, data.password)
 
