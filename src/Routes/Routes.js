@@ -46,10 +46,10 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:category_name',
-                loader: ({ params }) => fetch(`http://localhost:5000/category/${params.category_name}`),
+                loader: ({ params }) => fetch(`https://tukitakibyrhidy.web.app/category/${params.category_name}`),
                 element: <PrivateRoute><Categories></Categories></PrivateRoute>
             },
-            
+
             {
                 path: '/*',
                 element: <UnknownPageError></UnknownPageError>

@@ -54,7 +54,7 @@ const Register = () => {
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role, verified: 'no' };
-        fetch('http://localhost:5000/users', {
+        fetch('https://tukitakibyrhidy.web.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

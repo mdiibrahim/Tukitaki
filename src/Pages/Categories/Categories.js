@@ -35,7 +35,7 @@ const Categories = () => {
         console.log(reportMobile)
         if (response) {
             try {
-                fetch('http://localhost:5000/reported-items', {
+                fetch('https://tukitakibyrhidy.web.app/reported-items', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
@@ -81,7 +81,7 @@ const Categories = () => {
         }
         try {
 
-            fetch('http://localhost:5000/booking', {
+            fetch('https://tukitakibyrhidy.web.app/booking', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

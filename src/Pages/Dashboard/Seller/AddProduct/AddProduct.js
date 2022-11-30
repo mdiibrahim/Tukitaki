@@ -14,7 +14,7 @@ const AddProduct = () => {
     useEffect(() => {
         try {
 
-            axios.get('http://localhost:5000/category')
+            axios.get('https://tukitakibyrhidy.web.app/category')
                 .then(data => {
                     setCategories(data.data);
 
@@ -74,7 +74,7 @@ const AddProduct = () => {
                         }
                         try {
 
-                            fetch('http://localhost:5000/products', {
+                            fetch('https://tukitakibyrhidy.web.app/products', {
                                 method: 'POST',
                                 headers: {
                                     'content-type': 'application/json',
