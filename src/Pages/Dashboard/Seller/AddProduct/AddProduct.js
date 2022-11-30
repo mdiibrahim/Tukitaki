@@ -61,7 +61,7 @@ const AddProduct = () => {
                         mobilePrice,
                         mobileCondition,
                         sellerName: seller.name,
-                        isSellerVerified: seller.verified,
+                        verified: seller.verified,
                         sellerNumber,
                         sellerLocation,
                         yearOfPurchase,

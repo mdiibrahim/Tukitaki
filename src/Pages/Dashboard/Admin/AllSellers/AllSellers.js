@@ -42,14 +42,26 @@ const AllSellers = () => {
             })
                 .then(res => {
                     console.log(res)
+                    try {
+                        axios.put(`http://localhost:5000/products/sellers/verify:id${id}`, {
+                            verified: 'yes'
+                        })
+                            .then(res => {
+                               
+                                refetch();
+                            })
+                    } catch (error) {
+                        console.log(error)
+                    }
                     if(res.data.modifiedCount > 0){
-                        toast.success('Successfully Unverified the seller.')
+                        toast.success('Successfully verified the seller.')
                     }
                     refetch();
                 })
         } catch (error) {
             console.log(error)
         }
+        
     }
     const handleUnverifySeller = id => {
         // fetch(`http://localhost:5000/users/sellers/unverify/${id}`, {
@@ -72,6 +84,20 @@ const AllSellers = () => {
             })
                 .then(res => {
                     console.log(res)
+                    try {
+                        axios.put(`http://localhost:5000/products/sellers/unverify/${id}`, {
+                            verified: 'no'
+                        })
+                            .then(res => {
+                                console.log(res)
+                                if(res.data.modifiedCount > 0){
+                                    toast.success('Successfully Unverified the seller.')
+                                }
+                                refetch();
+                            })
+                    } catch (error) {
+                        console.log(error)
+                    }
                     if(res.data.modifiedCount > 0){
                         toast.success('Successfully Unverified the seller.')
                     }

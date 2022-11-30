@@ -5,6 +5,9 @@ import useBuyer from '../../Hooks/useBuyer/useBuyer';
 import { BsFillPatchCheckFill } from "react-icons/bs"
 import useSeller from '../../Hooks/useSeller/useSeller';
 import './Categories.css'
+import toast from 'react-hot-toast';
+import { CgProfile } from 'react-icons/cg'
+import axios from 'axios';
 const Categories = () => {
     const { user, setReportedItems } = useContext(AuthContext);
     const [isBuyer] = useBuyer(user?.email);
@@ -13,33 +16,60 @@ const Categories = () => {
     const handleReportedItems = (id) => {
         
         const reportedMobile = mobiles.filter(mobile => mobile._id === id ? mobile : null)
+        
         const response = window.confirm("Are you sure you want to report that item to admin?");
+        const reportMobile = {
+            reportedMobileId: reportedMobile[0]._id,
+            reportedMobileName: reportedMobile[0].mobileName,
+            reportedMobileSellerEmail: reportedMobile[0].sellerEmail,
+            reportedMobileBrand: reportedMobile[0].mobileBrand,
 
-        if (response) {
-            setReportedItems(reportedMobile)
-            alert("Reported to admin done");
-        } else {
-            alert("Report to admin Cancel");
         }
-        
-        
+        console.log(reportMobile)
+        if (response) {
+            try {
+                fetch('http://localhost:5000/reported-items', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json', 
+                        // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(reportMobile)
+                })
+                    .then(res => {
+                        
+                        if(res.ok){
+                            toast.success("Successfully Reported to admin done");
+                        }
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+            setReportedItems(reportedMobile)
+
             
-        
+        } else {
+            toast.error("Report to admin Cancel");
+        }
+
+
+
+
 
         // setReportedItems(reportedMobile);
-       
+
 
     }
 
     return (
         <section >
-            <h1 className='text-center text-2xl text-bold text-primary mt-1'>Your desired {mobiles[0].mobileBrand}</h1>
+            <h1 className='text-center text-2xl text-bold text-primary mt-1'>{mobiles[0]?.mobileBrand ? mobiles[0]?.mobileBrand :"No products here"}</h1>
 
             <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 my-6'>
                 {
                     mobiles.map((mobile) => {
-                        const { date, details, isSellerVerified, mobileBrand, mobileCondition, mobileImage, mobileName, mobilePrice, sellerLocation, sellerName, sellerNumber, sold, yearOfPurchase, _id, yearOfUse, originalMobilePrice } = mobile;
-
+                        const { date, details, verified, mobileBrand, mobileCondition, mobileImage, mobileName, mobilePrice, sellerLocation, sellerName, sellerNumber, sold, yearOfPurchase, _id, yearOfUse, originalMobilePrice } = mobile;
+                        
 
                         return <div key={_id} >{
                             // only show the available product 
@@ -51,7 +81,7 @@ const Categories = () => {
                                         <div className="badge badge-secondary">{mobileBrand}</div>
                                     </h2>
                                     <p>Price: $<span className='font-bold'>{mobilePrice}</span></p>
-                                    <p>Seller Name: <span className='font-bold'>{sellerName}</span>{isSellerVerified === 'yes' && <BsFillPatchCheckFill className='inline ml-2 text-primary font-bold' />}</p>
+                                    <p>Seller Name: <span className='font-bold'>{sellerName}</span>{verified === 'yes' ? <BsFillPatchCheckFill className='inline ml-2 text-primary font-bold' /> : <CgProfile className='inline ml-2 text-primary font-bold'/>}</p>
                                     <p>Mobile Condition: <span className='font-bold'>{mobileCondition}</span></p>
                                     <p>Seller Number: <span className='font-bold'>{sellerNumber}</span></p>
                                     <p>Meeting Location: <span className='font-bold'>{sellerLocation}</span></p>
@@ -70,7 +100,7 @@ const Categories = () => {
                                                 <button className="btn btn-error" disabled >Report</button>
 
                                         }
-                                        
+
                                     </div>
 
                                 </div>
