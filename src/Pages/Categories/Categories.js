@@ -8,6 +8,9 @@ import './Categories.css'
 import toast from 'react-hot-toast';
 import { CgProfile } from 'react-icons/cg'
 import axios from 'axios';
+import BookNow from './BookNow/BookNow';
+
+
 const Categories = () => {
     const { user, setReportedItems } = useContext(AuthContext);
     const [isBuyer] = useBuyer(user?.email);
@@ -28,7 +31,7 @@ const Categories = () => {
         console.log(reportMobile)
         if (response) {
             try {
-                fetch('https://tukitakibyrhidy-server.vercel.app/reported-items', {
+                fetch('http://localhost:5000/reported-items', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
@@ -70,45 +73,52 @@ const Categories = () => {
                     mobiles.map((mobile) => {
                         const { date, details, verified, mobileBrand, mobileCondition, mobileImage, mobileName, mobilePrice, sellerLocation, sellerName, sellerNumber, sold, yearOfPurchase, _id, yearOfUse, originalMobilePrice } = mobile;
 
+                        if (sold === 'no') {
 
-                        return <div key={_id} >{
-                            // only show the available product 
-                            sold === 'no' && <div className="card w-full  shadow-lg">
-                                <figure><img src={mobileImage} alt=" " className='w-4/6 md:w-full' /></figure>
-                                <div className="card-body text-center md:text-left text-lg">
-                                    <h2 className="card-title justify-center ">
-                                        {mobileName}
-                                        <div className="badge badge-secondary">{mobileBrand}</div>
-                                    </h2>
-                                    <p>Price: $<span className='font-bold'>{mobilePrice}</span></p>
-                                    <p>Seller Name: <span className='font-bold'>{sellerName}</span>{verified === 'yes' ? <BsFillPatchCheckFill className='inline ml-2 text-primary font-bold' /> : <CgProfile className='inline ml-2 text-primary font-bold' />}</p>
-                                    <p>Mobile Condition: <span className='font-bold'>{mobileCondition}</span></p>
-                                    <p>Seller Number: <span className='font-bold'>{sellerNumber}</span></p>
-                                    <p>Meeting Location: <span className='font-bold'>{sellerLocation}</span></p>
-                                    <p>Purchasing year: <span className='font-bold'>{yearOfPurchase}</span></p>
-                                    <p>Used: <span className='font-bold'>{yearOfUse}</span></p>
-                                    <p>Post Date: <span className='font-bold'>{date}</span></p>
-                                    <p>Original Price: <span className='font-bold'>{originalMobilePrice}</span></p>
-                                    <p><span className='underline'>Detailes about phone:</span> {details}</p>
-                                    <div className="card-actions justify-between mt-6">
-                                        {
-                                            isBuyer ? <div className="btn btn-primary">Book Now</div> : <button className="btn btn-primary" disabled>Book Now</button>
-                                        }
-                                        {
-                                            (isBuyer || isSeller) ?
-                                                <div className="btn btn-error" htmlFor="confirm-modal" onClick={() => handleReportedItems(_id)}>Report</div> :
-                                                <button className="btn btn-error" disabled >Report</button>
+                            return <div key={_id} >{
+                                // only show the available product 
+                                <div className="card w-full  shadow">
+                                    <figure><img src={mobileImage} alt=" " className='w-4/6 md:w-full' /></figure>
+                                    <div className="card-body text-center md:text-left text-lg">
+                                        <h2 className="card-title justify-center ">
+                                            {mobileName}
+                                            <div className="badge badge-secondary">{mobileBrand}</div>
+                                        </h2>
+                                        <p>Price: $<span className='font-bold'>{mobilePrice}</span></p>
+                                        <p>Seller Name: <span className='font-bold'>{sellerName}</span>{verified === 'yes' ? <BsFillPatchCheckFill className='inline ml-2 text-primary font-bold' /> : <CgProfile className='inline ml-2 text-primary font-bold' />}</p>
+                                        <p>Mobile Condition: <span className='font-bold'>{mobileCondition}</span></p>
+                                        <p>Seller Number: <span className='font-bold'>{sellerNumber}</span></p>
+                                        <p>Meeting Location: <span className='font-bold'>{sellerLocation}</span></p>
+                                        <p>Purchasing year: <span className='font-bold'>{yearOfPurchase}</span></p>
+                                        <p>Used: <span className='font-bold'>{yearOfUse}</span></p>
+                                        <p>Post Date: <span className='font-bold'>{date}</span></p>
+                                        <p>Original Price: <span className='font-bold'>{originalMobilePrice}</span></p>
+                                        <p><span className='underline'>Detailes about phone:</span> {details}</p>
+                                        <div className="card-actions justify-between mt-6">
+                                            {
+                                                isBuyer ? sold === 'no' && <div className="btn btn-primary" htmlFor="booking-modal"  >Book Now</div> : <button className="btn btn-primary" disabled>Book Now</button>
+                                            }
+                                            {
+                                                <BookNow mobile={mobile}></BookNow>
+                                            }
+                                            {
+                                                (isBuyer || isSeller) ?
+                                                    <div className="btn btn-error" onClick={() => handleReportedItems(_id)}>Report</div> :
+                                                    <button className="btn btn-error" disabled >Report</button>
 
-                                        }
+                                            }
+
+
+                                        </div>
 
                                     </div>
-
                                 </div>
-                            </div>
 
+                            }
+
+                            </div>
                         }
 
-                        </div>
                     })
                 }
             </div>

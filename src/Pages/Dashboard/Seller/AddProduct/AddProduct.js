@@ -17,7 +17,7 @@ const AddProduct = () => {
     useEffect(() => {
         try {
 
-            axios.get('https://tukitakibyrhidy-server.vercel.app/category')
+            axios.get('http://localhost:5000/category')
                 .then(data => {
                     setCategories(data.data);
 
@@ -60,6 +60,7 @@ const AddProduct = () => {
                             mobileBrand,
                             mobilePrice,
                             mobileCondition,
+                            sellerEmail : seller.email,
                             sellerName: seller.name,
                             verified: seller.verified,
                             sellerNumber,
@@ -75,7 +76,7 @@ const AddProduct = () => {
                         }
                         try {
 
-                            fetch('https://tukitakibyrhidy-server.vercel.app/products', {
+                            fetch('http://localhost:5000/products', {
                                 method: 'POST',
                                 headers: {
                                     'content-type': 'application/json',

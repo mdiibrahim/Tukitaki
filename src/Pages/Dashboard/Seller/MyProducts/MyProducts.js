@@ -6,17 +6,18 @@ import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 
 
 const MyProducts = () => {
-    const { user, setAdvertiseItems } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const { data: products = [], refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`https://tukitakibyrhidy-server.vercel.app/products/${user?.email}`);
+            const res = await fetch(`http://localhost:5000/products/${user?.email}`);
             const data = await res.json();
             return data;
         }
     });
+    console.log(products)
     const handleDeleteProduct = (id) => {
-        fetch(`https://tukitakibyrhidy-server.vercel.app/products/${id}`, {
+        fetch(`http://localhost:5000/products/${id}`, {
             method: 'Delete',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -34,7 +35,7 @@ const MyProducts = () => {
     const handleAdvertiseProduct = (id) => {
         console.log(id)
         try {
-            fetch(`https://tukitakibyrhidy-server.vercel.app/products/advertise/${id}`, {
+            fetch(`http://localhost:5000/products/advertise/${id}`, {
                 method: 'GET'
             })
                 .then(res => res.json())
@@ -97,7 +98,7 @@ const MyProducts = () => {
                                             sold === 'no' && <button onClick={() => handleAdvertiseProduct(_id)} className='btn btn-xs btn-primary'>Advertise</button>
                                         }
                                         {
-                                            sold === 'yes' && <button className='checkbox' disabled checked>Advertise</button>
+                                            sold === 'yes' && <button className='btn btn-xs' disabled>Advertise</button>
                                         }
                                     </td>
 

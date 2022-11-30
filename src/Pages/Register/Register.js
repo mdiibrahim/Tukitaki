@@ -3,33 +3,31 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
-import useToken from '../../Hooks/useToken/useToken';
+
 
 const Register = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { registerUser, editUserName, registerWithGoogle } = useContext(AuthContext);
     const [registerError, setRegisterError] = useState('');
-    const [registeredEmail, setRegisteredEmail] = useState('')
-    const [token] = useToken(registeredEmail);
-    if (token) {
-        navigate('/');
-    }
-    const onSubmit = (data,event) => {
+
+
+
+
+
+    const onSubmit = (data, event) => {
         event.preventDefault();
         setRegisterError('');
         registerUser(data.email, data.password)
 
-            .then(result => {
-                const user = result.user;
-
-
+            .then(() => {
                 editUserName({ displayName: data.name })
                     .then(() => {
                         saveUserInDB(data.name, data.email, data.role);
 
                     })
                     .catch(err => console.error(err));
+                navigate('/');
                 toast.success('Successfully Your registration done.')
 
             })
@@ -45,7 +43,7 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
                 saveUserInDB(user.displayName, user.email, 'buyer');
-
+                navigate('/');
                 toast.success('Successfully Your registration done.')
 
             })
@@ -56,7 +54,7 @@ const Register = () => {
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role, verified: 'no' };
-        fetch('https://tukitakibyrhidy-server.vercel.app/users', {
+        fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -65,8 +63,7 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(() => {
-                setRegisteredEmail(email)
-
+              
             })
             .catch((err) => {
                 console.error(err);

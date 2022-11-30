@@ -19,6 +19,7 @@ import BuyerRoute from './BuyerRoute/BuyerRoute';
 import MyOrders from '../Pages/Dashboard/Buyer/MyOrders/MyOrders';
 import Dashboardlayout from '../Layout/MainLayout/DashboardLayout/DashboardLayout';
 import Categories from '../Pages/Categories/Categories';
+import Booking from '../Pages/Categories/BookNow/BookNow';
 
 
 const router = createBrowserRouter([
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:category_name',
-                loader: ({ params }) => fetch(`https://tukitakibyrhidy-server.vercel.app/category/${params.category_name}`),
+                loader: ({ params }) => fetch(`http://localhost:5000/category/${params.category_name}`),
                 element: <PrivateRoute><Categories></Categories></PrivateRoute>
             },
             {
