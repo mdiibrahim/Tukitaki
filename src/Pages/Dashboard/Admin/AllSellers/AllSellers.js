@@ -7,64 +7,66 @@ const AllSellers = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users/sellers');
+            const res = await fetch('https://tukitakibyrhidy-server.vercel.app/users/sellers');
             const data = await res.json();
             return data;
         }
     });
-   
-    
-   /* const handleVerifySeller = id => {
-         console.log(id)
-        fetch(`http://localhost:5000/users/sellers/verify/${id}`, {
-            method: 'PUT', 
-            headers: {
-                // authorization: `bearer ${localStorage.getItem('accessToken')}`
-                'Content-Type': 'application/json'
-                
-            },
-            body: JSON.stringify({
-                verified: 'yes'
-            }) 
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.modifiedCount > 0){
-                toast.success('Successfully verified the seller.')
-                refetch();
-            }
-        })
-    }*/
+
+
+    /* const handleVerifySeller = id => {
+          console.log(id)
+         fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/verify/${id}`, {
+             method: 'PUT', 
+             headers: {
+                 // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                 'Content-Type': 'application/json'
+                 
+             },
+             body: JSON.stringify({
+                 verified: 'yes'
+             }) 
+         })
+         .then(res => res.json())
+         .then(data => {
+             if(data.modifiedCount > 0){
+                 toast.success('Successfully verified the seller.')
+                 refetch();
+             }
+         })
+     }*/
     const handleVerifySeller = (id) => {
         try {
-            axios.put(`http://localhost:5000/users/sellers/verify/${id}`, {
+            axios.put(`https://tukitakibyrhidy-server.vercel.app/users/sellers/verify/${id}`, {
                 verified: 'yes'
             })
                 .then(res => {
                     console.log(res)
-                    try {
-                        axios.put(`http://localhost:5000/products/sellers/verify:id${id}`, {
-                            verified: 'yes'
-                        })
-                            .then(res => {
-                               
-                                refetch();
-                            })
-                    } catch (error) {
-                        console.log(error)
-                    }
-                    if(res.data.modifiedCount > 0){
+
+                    if (res.data.modifiedCount > 0) {
                         toast.success('Successfully verified the seller.')
                     }
-                    refetch();
+
                 })
         } catch (error) {
             console.log(error)
         }
-        
+        try {
+            axios.put(`https://tukitakibyrhidy-server.vercel.app/products/sellers/verify:id${id}`, {
+                verified: 'yes'
+            })
+                .then(res => {
+
+
+                })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
+    refetch();
     const handleUnverifySeller = id => {
-        // fetch(`http://localhost:5000/users/sellers/unverify/${id}`, {
+        // fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/unverify/${id}`, {
         //     method: 'PUT', 
         //     headers: {
         //         authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -79,18 +81,18 @@ const AllSellers = () => {
         //     }
         // })
         try {
-            axios.put(`http://localhost:5000/users/sellers/unverify/${id}`, {
+            axios.put(`https://tukitakibyrhidy-server.vercel.app/users/sellers/unverify/${id}`, {
                 verified: 'no'
             })
                 .then(res => {
                     console.log(res)
                     try {
-                        axios.put(`http://localhost:5000/products/sellers/unverify/${id}`, {
+                        axios.put(`https://tukitakibyrhidy-server.vercel.app/products/sellers/unverify/${id}`, {
                             verified: 'no'
                         })
                             .then(res => {
                                 console.log(res)
-                                if(res.data.modifiedCount > 0){
+                                if (res.data.modifiedCount > 0) {
                                     toast.success('Successfully Unverified the seller.')
                                 }
                                 refetch();
@@ -98,7 +100,7 @@ const AllSellers = () => {
                     } catch (error) {
                         console.log(error)
                     }
-                    if(res.data.modifiedCount > 0){
+                    if (res.data.modifiedCount > 0) {
                         toast.success('Successfully Unverified the seller.')
                     }
                     refetch();
@@ -107,11 +109,11 @@ const AllSellers = () => {
             console.log(error)
         }
     }
-    
-     
-    
+
+
+
     const handleDeleteSeller = id => {
-        fetch(`http://localhost:5000/users/sellers/${id}`, {
+        fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/${id}`, {
             method: 'Delete',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -150,13 +152,13 @@ const AllSellers = () => {
                                 <td>{seller.email}</td>
                                 <td>
                                     {
-                                        seller.verified === 'no' &&  <button  onClick={() => handleVerifySeller(seller._id)}  className='btn btn-xs btn-primary'>Verify</button>
+                                        seller.verified === 'no' && <button onClick={() => handleVerifySeller(seller._id)} className='btn btn-xs btn-primary'>Verify</button>
                                     }
                                     {
-                                        seller.verified === 'yes' && <button  onClick={() => handleUnverifySeller(seller._id)}  className='btn btn-xs btn-primary'>Unverify</button>
+                                        seller.verified === 'yes' && <button onClick={() => handleUnverifySeller(seller._id)} className='btn btn-xs btn-primary'>Unverify</button>
                                     }
                                 </td>
-                                    
+
                                 <td><button onClick={() => handleDeleteSeller(seller._id)} className='btn btn-xs btn-error'>Delete</button></td>
 
                             </tr>)

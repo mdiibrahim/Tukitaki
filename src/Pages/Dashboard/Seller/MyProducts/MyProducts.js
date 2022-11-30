@@ -10,13 +10,13 @@ const MyProducts = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products/${user?.email}`);
+            const res = await fetch(`https://tukitakibyrhidy-server.vercel.app/products/${user?.email}`);
             const data = await res.json();
             return data;
         }
     });
     const handleDeleteProduct = (id) => {
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`https://tukitakibyrhidy-server.vercel.app/products/${id}`, {
             method: 'Delete',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -52,7 +52,7 @@ const MyProducts = () => {
         <div>
             <h1 className='text-center text-2xl text-bold text-primary mt-1'>My products</h1>
             <div className="overflow-x-auto w-full">
-                <table className="table w-full">
+                <table className="table table-compact w-full">
                     <thead>
                         <tr>
                             <th></th>

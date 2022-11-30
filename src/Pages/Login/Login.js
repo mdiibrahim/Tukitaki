@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
-import { useLocation, useNavigate, Link} from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import useToken from '../../Hooks/useToken/useToken';
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -13,8 +13,8 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
-    
-    
+
+
 
     const onSubmit = data => {
         setLogInError('');
@@ -27,7 +27,7 @@ const Login = () => {
                 console.error(error.message)
                 setLogInError(error.message);
             });
-            
+
     }
     const handleLogInWithGoogle = () => {
         setLogInError('');
@@ -35,18 +35,18 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 saveUserInDB(user.displayName, user.email, 'buyer');
-                
+
                 toast.success('Successfully You entered.')
 
             })
             .catch(error => {
                 setLogInError(error.message)
             });
-            
+
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role };
-        fetch('http://localhost:5000/users', {
+        fetch('https://tukitakibyrhidy-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -54,7 +54,7 @@ const Login = () => {
             body: JSON.stringify(user)
         })
             .then(res => res.json())
-            .then(() =>{
+            .then(() => {
                 setLoginEmail(email)
             })
             .catch((err) => {
@@ -64,7 +64,7 @@ const Login = () => {
     if (token) {
         navigate(from, { replace: true });
     }
-    
+
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
             <div className='bg-accent mx-auto sm:w-2/4 p-16 shadow rounded-lg'>

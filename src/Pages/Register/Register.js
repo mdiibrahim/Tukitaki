@@ -16,18 +16,18 @@ const Register = () => {
         navigate('/');
     }
     const onSubmit = (data) => {
-        
+
         setRegisterError('');
         registerUser(data.email, data.password)
-        
+
             .then(result => {
                 const user = result.user;
 
-                
+
                 editUserName({ displayName: data.name })
                     .then(() => {
                         saveUserInDB(data.name, data.email, data.role);
-                        
+
                     })
                     .catch(err => console.error(err));
                 toast.success('Successfully Your registration done.')
@@ -36,8 +36,8 @@ const Register = () => {
             .catch(error => {
                 setRegisterError(error.message)
             });
-            
-        
+
+
     }
     const handleLogInWithGoogle = () => {
         setRegisterError('');
@@ -45,18 +45,18 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
                 saveUserInDB(user.displayName, user.email, 'buyer');
-                
+
                 toast.success('Successfully Your registration done.')
 
             })
             .catch(error => {
                 setRegisterError(error.message)
             });
-            
+
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role, verified: 'no' };
-        fetch('http://localhost:5000/users', {
+        fetch('https://tukitakibyrhidy-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -64,16 +64,16 @@ const Register = () => {
             body: JSON.stringify(user)
         })
             .then(res => res.json())
-            .then(() =>{
+            .then(() => {
                 setRegisteredEmail(email)
-                
+
             })
             .catch((err) => {
                 console.error(err);
             })
     }
-   
-    
+
+
     return (
         <section className='min-h-[600px] mx-auto my-20 '>
             <div className='bg-accent mx-auto sm:w-2/4 p-16 shadow rounded-lg'>

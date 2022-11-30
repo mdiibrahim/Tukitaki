@@ -17,7 +17,7 @@ const AddProduct = () => {
     useEffect(() => {
         try {
 
-            axios.get('http://localhost:5000/category')
+            axios.get('https://tukitakibyrhidy-server.vercel.app/category')
                 .then(data => {
                     setCategories(data.data);
 
@@ -39,76 +39,76 @@ const AddProduct = () => {
     const onSubmit = (data) => {
         const { mobileBrand, details, mobileCondition, mobileName, mobilePrice, sellerLocation, sellerNumber, yearOfPurchase, yearOfUse, originalMobilePrice } = data;
         const date = new Date().toLocaleDateString();
-        
-        
-    
+
+
+
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
         try {
-            
+
             fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_api_key}`, {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(imgData => {
-                if(imgData.success){
-                    console.log(imgData.data.url);
-                    const mobile = {
-                        mobileName,
-                        mobileBrand,
-                        mobilePrice,
-                        mobileCondition,
-                        sellerName: seller.name,
-                        verified: seller.verified,
-                        sellerNumber,
-                        sellerLocation,
-                        yearOfPurchase,
-                        details,
-                        date,
-                        mobileImage: imgData.data.url,
-                        sold: 'no',
-                        originalMobilePrice,
-                        yearOfUse
+                .then(res => res.json())
+                .then(imgData => {
+                    if (imgData.success) {
+                        console.log(imgData.data.url);
+                        const mobile = {
+                            mobileName,
+                            mobileBrand,
+                            mobilePrice,
+                            mobileCondition,
+                            sellerName: seller.name,
+                            verified: seller.verified,
+                            sellerNumber,
+                            sellerLocation,
+                            yearOfPurchase,
+                            details,
+                            date,
+                            mobileImage: imgData.data.url,
+                            sold: 'no',
+                            originalMobilePrice,
+                            yearOfUse
 
+                        }
+                        try {
+
+                            fetch('https://tukitakibyrhidy-server.vercel.app/products', {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json',
+                                    // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                                },
+                                body: JSON.stringify(mobile)
+                            })
+                                .then(res => res.json())
+                                .then(result => {
+                                    console.log(result);
+                                    toast.success('Your mobile is added successfully');
+                                    // navigate('/dashboard/my-products')
+                                })
+                        }
+                        catch (error) {
+                            console.error(error)
+                        }
                     }
-                    try {
-        
-                        fetch('http://localhost:5000/products', {
-                            method: 'POST',
-                            headers: {
-                                'content-type': 'application/json', 
-                                // authorization: `bearer ${localStorage.getItem('accessToken')}`
-                            },
-                            body: JSON.stringify(mobile)
-                        })
-                        .then(res => res.json())
-                        .then(result =>{
-                            console.log(result);
-                            toast.success('Your mobile is added successfully');
-                            // navigate('/dashboard/my-products')
-                        })
-                    }
-                    catch (error) {
-                        console.error(error)
-                    }
-        }
-            })
+                })
         }
         catch (error) {
             console.error(error)
         }
-}
-// if (isSellerLoading) {
-//     return <Loading></Loading>
-// }
+    }
+    // if (isSellerLoading) {
+    //     return <Loading></Loading>
+    // }
 
     return (
         <div>
             <h1 className='text-center text-2xl text-bold text-primary mt-1'>Add a mobile </h1>
             <section className='min-h-[600px] my-2 '>
-                <div className='bg-accent mx-auto sm:w-2/4 p-16 shadow rounded-lg'>
+                <div className='bg-accent mx-auto lg:w-4/6 p-16 w-full shadow rounded-lg'>
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         {/* name field */}

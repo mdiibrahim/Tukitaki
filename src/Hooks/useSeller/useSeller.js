@@ -4,14 +4,14 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 const useSeller = email => {
     const [isSeller, setIsSeller] = useState(false);
     const { setSeller } = useContext(AuthContext);
-    
+
     const [isSellerLoading, setIsSellerLoading] = useState(true);
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:5000/users/seller/${email}`)
+            fetch(`https://tukitakibyrhidy-server.vercel.app/users/seller/${email}`)
                 .then(res => res.json())
                 .then(data => {
-                    
+
                     setIsSeller(data.isSeller);
                     setSeller(data.seller)
                     setIsSellerLoading(false);
