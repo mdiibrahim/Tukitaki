@@ -7,7 +7,7 @@ const useToken = (email) => {
         if (email) {
             try {
 
-                axios.get(`https://tukitakibyrhidy.web.app/jwt?email=/${email}`)
+                axios.get(`https://tukitakibyrhidy-server.vercel.app/jwt?email=/${email}`)
                     .then(res => res.json())
                     .then(data => {
                         if (data.accessToken) {

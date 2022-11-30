@@ -54,7 +54,7 @@ const Register = () => {
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role, verified: 'no' };
-        fetch('https://tukitakibyrhidy.web.app/users', {
+        fetch('https://tukitakibyrhidy-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -46,7 +46,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:category_name',
-                loader: ({ params }) => fetch(`https://tukitakibyrhidy.web.app/category/${params.category_name}`),
+                loader: ({ params }) => fetch(`https://tukitakibyrhidy-server.vercel.app/category/${params.category_name}`),
                 element: <PrivateRoute><Categories></Categories></PrivateRoute>
             },
 

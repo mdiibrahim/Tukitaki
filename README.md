@@ -1,5 +1,5 @@
 This is a buy and selling website for used mobile phones.
-The website link: https://tukitakibyrhidy.web.app/ This is a mobile phone buy and sell  platfrom. Which name is "Tukitaki-টুকিটাকি". Here, we connect client and seller. In this web app, we use:
+The website link: https://tukitakibyrhidy-server.vercel.app/ This is a mobile phone buy and sell  platfrom. Which name is "Tukitaki-টুকিটাকি". Here, we connect client and seller. In this web app, we use:
 
 i)React:(https://reactjs.org/) It is a full react based website which is single page applicatuion,
 

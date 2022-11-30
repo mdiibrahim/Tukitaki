@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import useBuyer from '../../Hooks/useBuyer/useBuyer';
 import { BsFillPatchCheckFill } from "react-icons/bs"
@@ -35,7 +35,7 @@ const Categories = () => {
         console.log(reportMobile)
         if (response) {
             try {
-                fetch('https://tukitakibyrhidy.web.app/reported-items', {
+                fetch('https://tukitakibyrhidy-server.vercel.app/reported-items', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
@@ -81,7 +81,7 @@ const Categories = () => {
         }
         try {
 
-            fetch('https://tukitakibyrhidy.web.app/booking', {
+            fetch('https://tukitakibyrhidy-server.vercel.app/booking', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

@@ -14,7 +14,7 @@ const AddProduct = () => {
     useEffect(() => {
         try {
 
-            axios.get('https://tukitakibyrhidy.web.app/category')
+            axios.get('https://tukitakibyrhidy-server.vercel.app/category')
                 .then(data => {
                     setCategories(data.data);
 
@@ -74,7 +74,7 @@ const AddProduct = () => {
                         }
                         try {
 
-                            fetch('https://tukitakibyrhidy.web.app/products', {
+                            fetch('https://tukitakibyrhidy-server.vercel.app/products', {
                                 method: 'POST',
                                 headers: {
                                     'content-type': 'application/json',
