@@ -9,14 +9,13 @@ const MyProducts = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`https://tukitakibyrhidy-server.vercel.app/products/${user?.email}`);
+            const res = await fetch(`http://localhost:5000/products/${user?.email}`);
             const data = await res.json();
             return data;
         }
     });
-    console.log(products)
     const handleDeleteProduct = (id) => {
-        fetch(`https://tukitakibyrhidy-server.vercel.app/products/${id}`, {
+        fetch(`http://localhost:5000/products/${id}`, {
             method: 'Delete',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -34,9 +33,7 @@ const MyProducts = () => {
     const handleAdvertiseProduct = (id) => {
         console.log(id)
         try {
-            fetch(`https://tukitakibyrhidy-server.vercel.app/products/advertise/${id}`, {
-                method: 'GET'
-            })
+            fetch(`http://localhost:5000/products/advertise/${id}`)
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)

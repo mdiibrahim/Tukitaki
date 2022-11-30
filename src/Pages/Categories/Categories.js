@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import useBuyer from '../../Hooks/useBuyer/useBuyer';
 import { BsFillPatchCheckFill } from "react-icons/bs"
@@ -7,14 +7,19 @@ import useSeller from '../../Hooks/useSeller/useSeller';
 import './Categories.css'
 import toast from 'react-hot-toast';
 import { CgProfile } from 'react-icons/cg'
-import BookNow from './BookNow/BookNow';
+
+import { useForm } from 'react-hook-form';
 
 
 const Categories = () => {
     const { user, setReportedItems } = useContext(AuthContext);
+    console.log(user)
     const [isBuyer] = useBuyer(user?.email);
     const [isSeller] = useSeller(user?.email);
     const mobiles = useLoaderData();
+    const [booking, setBooking] = useState('');
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    console.log(booking)
     const handleReportedItems = (id) => {
 
         const reportedMobile = mobiles.filter(mobile => mobile._id === id ? mobile : null)
@@ -30,7 +35,7 @@ const Categories = () => {
         console.log(reportMobile)
         if (response) {
             try {
-                fetch('https://tukitakibyrhidy-server.vercel.app/reported-items', {
+                fetch('http://localhost:5000/reported-items', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
@@ -62,6 +67,15 @@ const Categories = () => {
 
 
     }
+    const onSubmit = (data, event) => {
+        event.preventDefault();
+
+
+
+
+
+
+    }
 
     return (
         <section >
@@ -75,6 +89,7 @@ const Categories = () => {
                         if (sold === 'no') {
 
                             return <div key={_id} >{
+
                                 // only show the available product 
                                 <div className="card w-full  shadow">
                                     <figure><img src={mobileImage} alt=" " className='w-4/6 md:w-full' /></figure>
@@ -95,17 +110,78 @@ const Categories = () => {
                                         <p><span className='underline'>Detailes about phone:</span> {details}</p>
                                         <div className="card-actions justify-between mt-6">
                                             {
-                                                isBuyer ? sold === 'no' && <div className="btn btn-primary" htmlFor="booking-modal"  >Book Now</div> : <button className="btn btn-primary" disabled>Book Now</button>
+                                                isBuyer ? sold === 'no' && <label htmlFor="my-modal-3" className="btn btn-primary">Book Now</label> : <div className="btn btn-primary" disabled>Book Now</div>
                                             }
-                                            {
-                                                <BookNow mobile={mobile}></BookNow>
-                                            }
+
                                             {
                                                 (isBuyer || isSeller) ?
                                                     <div className="btn btn-error" onClick={() => handleReportedItems(_id)}>Report</div> :
                                                     <button className="btn btn-error" disabled >Report</button>
 
                                             }
+
+                                                        {/* booking modal */}
+
+                                            {/* Put this part before </body> tag */}
+                                            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+                                            <div className="modal">
+                                                <div className="modal-box relative">
+                                                    <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                                    <form onSubmit={handleSubmit(onSubmit)}>
+
+                                                        {/* name field */}
+
+                                                        <div className="form-control w-full">
+
+                                                            <input type="name" defaultValue={user?.displayName} placeholder='name' readOnly {...register("name", { required: 'required' })} className="input input-primary input-bordered w-full" />
+
+                                                        </div>
+                                                        {/* email field */}
+
+                                                        <div className="form-control w-full">
+
+                                                            <input type="text" defaultValue={user?.email} readOnly  {...register("email", { required: 'required' })} className="input input-primary input-bordered w-full" />
+
+                                                        </div>
+
+
+
+                                                        <div className="form-control w-full">
+
+                                                            <input type="text" defaultValue={mobileName} readOnly className="input input-primary input-bordered w-full" {...register("mobileName", { required: 'required' })}
+                                                            />
+
+                                                        </div>
+                                                        <div className="form-control w-full">
+
+                                                            <input type="text" defaultValue={mobilePrice} readOnly className="input input-primary input-bordered w-full" {...register("mobilePrice", { required: 'required' })}
+                                                            />
+
+                                                        </div>
+                                                        <div className="form-control w-full">
+
+                                                            <input type="text" placeholder='your phone number' className="input input-primary input-bordered w-full" {...register("buyerNumber", { required: 'required' })}
+                                                            />
+                                                            {errors.buyerNumber && <small className='text-error mt-1' >{errors.buyerNumber.message}</small>}
+
+
+                                                        </div>
+                                                        <div className="form-control w-full">
+
+                                                            <input type="text" placeholder='meeting location' className="input input-primary input-bordered w-full" {...register("buyerLocation", { required: 'required' })}
+                                                            />
+                                                            {errors.buyerLocation && <small className='text-error mt-1' >{errors.buyerLocation.message}</small>}
+
+
+                                                        </div>
+
+
+                                                        <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='register' />
+
+
+                                                    </form>
+                                                </div>
+                                            </div>
 
 
                                         </div>
@@ -125,7 +201,8 @@ const Categories = () => {
 
 
 
-        </section>
+
+        </section >
     );
 };
 

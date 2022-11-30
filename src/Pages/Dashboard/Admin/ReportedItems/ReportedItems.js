@@ -8,7 +8,7 @@ const ReportedItems = () => {
     const { data: reportedItems = [], refetch } = useQuery({
         queryKey: ['reportedItems'],
         queryFn: async () => {
-            const res = await fetch('https://tukitakibyrhidy-server.vercel.app/reported-items');
+            const res = await fetch('http://localhost:5000/reported-items');
             const data = await res.json();
             console.log(data)
             return data;
@@ -17,7 +17,7 @@ const ReportedItems = () => {
     const handleDeleteReportedItem = (id, _id) => {
         try {
 
-            fetch(`https://tukitakibyrhidy-server.vercel.app/products/${id}`, {
+            fetch(`http://localhost:5000/products/${id}`, {
                 method: 'Delete',
                 // headers: {
                 //     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -37,7 +37,7 @@ const ReportedItems = () => {
         }
         try {
 
-            fetch(`https://tukitakibyrhidy-server.vercel.app/reported-items/${_id}`, {
+            fetch(`http://localhost:5000/reported-items/${_id}`, {
                 method: 'Delete',
                 // headers: {
                 //     authorization: `bearer ${localStorage.getItem('accessToken')}`

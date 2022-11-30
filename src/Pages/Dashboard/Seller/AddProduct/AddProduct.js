@@ -14,7 +14,7 @@ const AddProduct = () => {
     useEffect(() => {
         try {
 
-            axios.get('https://tukitakibyrhidy-server.vercel.app/category')
+            axios.get('http://localhost:5000/category')
                 .then(data => {
                     setCategories(data.data);
 
@@ -73,7 +73,7 @@ const AddProduct = () => {
                         }
                         try {
 
-                            fetch('https://tukitakibyrhidy-server.vercel.app/products', {
+                            fetch('http://localhost:5000/products', {
                                 method: 'POST',
                                 headers: {
                                     'content-type': 'application/json',
@@ -209,7 +209,7 @@ const AddProduct = () => {
                                 {errors.details.message}</small>}
                         </div>
 
-                        <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='register' />
+                        <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='Add' />
 
 
                     </form>

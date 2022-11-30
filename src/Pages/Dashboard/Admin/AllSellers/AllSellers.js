@@ -7,7 +7,7 @@ const AllSellers = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('https://tukitakibyrhidy-server.vercel.app/users/sellers');
+            const res = await fetch('http://localhost:5000/users/sellers');
             const data = await res.json();
             return data;
         }
@@ -16,7 +16,7 @@ const AllSellers = () => {
 
     /* const handleVerifySeller = email => {
           console.log(email)
-         fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/verify/${email}`, {
+         fetch(`http://localhost:5000/users/sellers/verify/${email}`, {
              method: 'PUT', 
              headers: {
                  // authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -37,7 +37,7 @@ const AllSellers = () => {
      }*/
     const handleVerifySeller = (id) => {
         try {
-            axios.put(`https://tukitakibyrhidy-server.vercel.app/users/sellers/verify/${id}`, {
+            axios.put(`http://localhost:5000/users/sellers/verify/${id}`, {
                 verified: 'yes'
             })
                 .then(res => {
@@ -56,7 +56,7 @@ const AllSellers = () => {
     }
 
     const handleUnverifySeller = id => {
-        // fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/unverify/${email}`, {
+        // fetch(`http://localhost:5000/users/sellers/unverify/${email}`, {
         //     method: 'PUT', 
         //     headers: {
         //         authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -71,7 +71,7 @@ const AllSellers = () => {
         //     }
         // })
         try {
-            axios.put(`https://tukitakibyrhidy-server.vercel.app/users/sellers/unverify/${id}`, {
+            axios.put(`http://localhost:5000/users/sellers/unverify/${id}`, {
                 verified: 'no'
             })
                 .then(res => {
@@ -92,7 +92,7 @@ const AllSellers = () => {
 
 
     const handleDeleteSeller = id => {
-        fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/${id}`, {
+        fetch(`http://localhost:5000/users/sellers/${id}`, {
             method: 'Delete',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
