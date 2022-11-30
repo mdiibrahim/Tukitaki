@@ -33,7 +33,8 @@ const AddProduct = () => {
         }</select>
     </React.Fragment>
 
-    const onSubmit = (data) => {
+    const onSubmit = (data, event) => {
+        event.preventDefault();
         const { mobileBrand, details, mobileCondition, mobileName, mobilePrice, sellerLocation, sellerNumber, yearOfPurchase, yearOfUse, originalMobilePrice } = data;
         const date = new Date().toLocaleDateString();
 

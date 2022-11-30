@@ -69,13 +69,43 @@ const Categories = () => {
     }
     const onSubmit = (data, event) => {
         event.preventDefault();
+        const { mobileName, mobilePrice, buyerLocation, buyerName, buyerEmail, buyerNumber } = data;
+        const booking = {
+            mobileName,
+            mobilePrice,
+            buyerLocation,
+            buyerName,
+            buyerEmail,
+            buyerNumber
 
+        }
+        try {
+
+            fetch('http://localhost:5000/booking', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(booking)
+            })
+                .then(res => res.json())
+                .then(result => {
+                    console.log(result);
+                    toast.success('Your booking is added successfully');
+
+                })
+        }
+        catch (error) {
+            console.error(error)
+        }
 
 
 
 
 
     }
+
 
     return (
         <section >
@@ -120,7 +150,7 @@ const Categories = () => {
 
                                             }
 
-                                                        {/* booking modal */}
+                                            {/* booking modal */}
 
                                             {/* Put this part before </body> tag */}
                                             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
@@ -133,14 +163,14 @@ const Categories = () => {
 
                                                         <div className="form-control w-full">
 
-                                                            <input type="name" defaultValue={user?.displayName} placeholder='name' readOnly {...register("name", { required: 'required' })} className="input input-primary input-bordered w-full" />
+                                                            <input type="name" defaultValue={user?.displayName} placeholder='name' readOnly {...register("buyerName", { required: 'required' })} className="input input-primary input-bordered w-full" />
 
                                                         </div>
                                                         {/* email field */}
 
                                                         <div className="form-control w-full">
 
-                                                            <input type="text" defaultValue={user?.email} readOnly  {...register("email", { required: 'required' })} className="input input-primary input-bordered w-full" />
+                                                            <input type="text" defaultValue={user?.email} readOnly  {...register("buyerEmail", { required: 'required' })} className="input input-primary input-bordered w-full" />
 
                                                         </div>
 
@@ -160,7 +190,7 @@ const Categories = () => {
                                                         </div>
                                                         <div className="form-control w-full">
 
-                                                            <input type="text" placeholder='your phone number' className="input input-primary input-bordered w-full" {...register("buyerNumber", { required: 'required' })}
+                                                            <input type="text" placeholder='your phone number' className="input input-primary input-bordered w-full" {...register("buyerNumber")}
                                                             />
                                                             {errors.buyerNumber && <small className='text-error mt-1' >{errors.buyerNumber.message}</small>}
 
@@ -168,15 +198,17 @@ const Categories = () => {
                                                         </div>
                                                         <div className="form-control w-full">
 
-                                                            <input type="text" placeholder='meeting location' className="input input-primary input-bordered w-full" {...register("buyerLocation", { required: 'required' })}
+                                                            <input type="text" placeholder='meeting location' className="input input-primary input-bordered w-full" {...register("buyerLocation")}
                                                             />
                                                             {errors.buyerLocation && <small className='text-error mt-1' >{errors.buyerLocation.message}</small>}
 
 
                                                         </div>
 
+                                                        <div className="modal-action">
+                                                            <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='Submit' />
+                                                        </div>
 
-                                                        <input className='btn btn-primary w-full mt-4 mb-2' type="submit" value='register' />
 
 
                                                     </form>
