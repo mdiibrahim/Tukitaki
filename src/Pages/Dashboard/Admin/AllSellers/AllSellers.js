@@ -7,7 +7,7 @@ const AllSellers = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users/sellers');
+            const res = await fetch('https://tukitakibyrhidy-server.vercel.app/users/sellers');
             const data = await res.json();
             return data;
         }
@@ -16,7 +16,7 @@ const AllSellers = () => {
 
     /* const handleVerifySeller = email => {
           console.log(email)
-         fetch(`http://localhost:5000/users/sellers/verify/${email}`, {
+         fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/verify/${email}`, {
              method: 'PUT', 
              headers: {
                  // authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -37,7 +37,7 @@ const AllSellers = () => {
      }*/
     const handleVerifySeller = (id) => {
         try {
-            axios.put(`http://localhost:5000/users/sellers/verify/${id}`, {
+            axios.put(`https://tukitakibyrhidy-server.vercel.app/users/sellers/verify/${id}`, {
                 verified: 'yes'
             })
                 .then(res => {
@@ -52,11 +52,11 @@ const AllSellers = () => {
         } catch (error) {
             console.log(error)
         }
-    
+
     }
-   
+
     const handleUnverifySeller = id => {
-        // fetch(`http://localhost:5000/users/sellers/unverify/${email}`, {
+        // fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/unverify/${email}`, {
         //     method: 'PUT', 
         //     headers: {
         //         authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -71,12 +71,12 @@ const AllSellers = () => {
         //     }
         // })
         try {
-            axios.put(`http://localhost:5000/users/sellers/unverify/${id}`, {
+            axios.put(`https://tukitakibyrhidy-server.vercel.app/users/sellers/unverify/${id}`, {
                 verified: 'no'
             })
                 .then(res => {
                     console.log(res)
-                    
+
                     if (res.data.matchedCount > 0) {
                         refetch();
                         toast.success('Successfully Unverified the seller.')
@@ -92,7 +92,7 @@ const AllSellers = () => {
 
 
     const handleDeleteSeller = id => {
-        fetch(`http://localhost:5000/users/sellers/${id}`, {
+        fetch(`https://tukitakibyrhidy-server.vercel.app/users/sellers/${id}`, {
             method: 'Delete',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`

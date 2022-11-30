@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
@@ -10,14 +9,14 @@ const MyProducts = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products/${user?.email}`);
+            const res = await fetch(`https://tukitakibyrhidy-server.vercel.app/products/${user?.email}`);
             const data = await res.json();
             return data;
         }
     });
     console.log(products)
     const handleDeleteProduct = (id) => {
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`https://tukitakibyrhidy-server.vercel.app/products/${id}`, {
             method: 'Delete',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -35,7 +34,7 @@ const MyProducts = () => {
     const handleAdvertiseProduct = (id) => {
         console.log(id)
         try {
-            fetch(`http://localhost:5000/products/advertise/${id}`, {
+            fetch(`https://tukitakibyrhidy-server.vercel.app/products/advertise/${id}`, {
                 method: 'GET'
             })
                 .then(res => res.json())

@@ -44,7 +44,7 @@ const Login = () => {
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role };
-        fetch('http://localhost:5000/users', {
+        fetch('https://tukitakibyrhidy-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -59,9 +59,6 @@ const Login = () => {
                 console.error(err);
             })
     }
-
-        
-  
 
     return (
         <section className='min-h-[600px] mx-auto my-20 '>

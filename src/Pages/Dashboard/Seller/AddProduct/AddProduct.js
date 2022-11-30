@@ -2,22 +2,19 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
-import useSeller from '../../../../Hooks/useSeller/useSeller';
-import Loading from '../../../SharedPages/Loading/Loading';
 
 const AddProduct = () => {
     const [categories, setCategories] = useState([]);
-    const { user, seller } = useContext(AuthContext);
-    const [isSellerLoading] = useSeller(user?.email);
+    const { seller } = useContext(AuthContext);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
         try {
 
-            axios.get('http://localhost:5000/category')
+            axios.get('https://tukitakibyrhidy-server.vercel.app/category')
                 .then(data => {
                     setCategories(data.data);
 
@@ -60,7 +57,7 @@ const AddProduct = () => {
                             mobileBrand,
                             mobilePrice,
                             mobileCondition,
-                            sellerEmail : seller.email,
+                            sellerEmail: seller.email,
                             sellerName: seller.name,
                             verified: seller.verified,
                             sellerNumber,
@@ -76,7 +73,7 @@ const AddProduct = () => {
                         }
                         try {
 
-                            fetch('http://localhost:5000/products', {
+                            fetch('https://tukitakibyrhidy-server.vercel.app/products', {
                                 method: 'POST',
                                 headers: {
                                     'content-type': 'application/json',
@@ -88,7 +85,7 @@ const AddProduct = () => {
                                 .then(result => {
                                     console.log(result);
                                     toast.success('Your mobile is added successfully');
-                                    // navigate('/dashboard/my-products')
+                                    navigate('/dashboard/my-products')
                                 })
                         }
                         catch (error) {

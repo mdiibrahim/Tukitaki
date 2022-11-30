@@ -15,7 +15,7 @@ const Header = () => {
             .catch(error => console.error(error))
     }
     useEffect(() => {
-        axios.get('http://localhost:5000/category')
+        axios.get('https://tukitakibyrhidy-server.vercel.app/category')
             .then(data => {
                 setCategories(data.data);
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import useBuyer from '../../Hooks/useBuyer/useBuyer';
@@ -7,7 +7,6 @@ import useSeller from '../../Hooks/useSeller/useSeller';
 import './Categories.css'
 import toast from 'react-hot-toast';
 import { CgProfile } from 'react-icons/cg'
-import axios from 'axios';
 import BookNow from './BookNow/BookNow';
 
 
@@ -31,7 +30,7 @@ const Categories = () => {
         console.log(reportMobile)
         if (response) {
             try {
-                fetch('http://localhost:5000/reported-items', {
+                fetch('https://tukitakibyrhidy-server.vercel.app/reported-items', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',

@@ -54,7 +54,7 @@ const Register = () => {
     }
     const saveUserInDB = (name, email, role) => {
         const user = { name, email, role, verified: 'no' };
-        fetch('http://localhost:5000/users', {
+        fetch('https://tukitakibyrhidy-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -63,7 +63,7 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(() => {
-              
+
             })
             .catch((err) => {
                 console.error(err);
